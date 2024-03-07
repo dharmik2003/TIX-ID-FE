@@ -4,10 +4,10 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { IoMdClose, IoMdMenu, IoMdNotificationsOutline } from "react-icons/io";
 import { useSelector,useDispatch } from 'react-redux';
 import Profile from '../../pages/AccountPage/Profile';
-import { setsignup } from '../../Redux/Slice/SignupSlice';
-import { setLogin } from '../../Redux/Slice/LoginSlice';
+import { setsignup } from '../../Redux/Signup/Signup.Slice';
+import { setLogin } from '../../Redux/Login/Login.Slice';
 import { RootState } from '../../Redux/store';
-import { resetMovieBooking } from '../../Redux/Slice/MovieBookingSlice';
+import { resetMovieBooking } from '../../Redux/MovieBooking/MovieBooking.Slice';
 
 
 const Navbar= () => {

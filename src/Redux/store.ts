@@ -17,13 +17,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import LoginSlice from './Slice/LoginSlice';
-import SignupSlice from './Slice/SignupSlice';
-import MovieSlice from './Slice/MovieSlice';
-import  TheaterDataSlice  from './Slice/TheaterDataSlice';
-import UpcommaingSlice from './Slice/UpcommaingSlice';
-import MovieBookingSlice from './Slice/MovieBookingSlice';
-import MyTicketSlice from './Slice/MyTicketSlice';
+import LoginSlice from './Login/Login.Slice';
+import SignupSlice from './Signup/Signup.Slice';
+import MovieSlice from './Movie/Movie.Slice';
+import  TheaterDataSlice  from './TheaterData/TheaterData.Slice';
+import UpcommaingSlice from './UpcomingMovies/Upcommaing.Slice';
+import MovieBookingSlice from './MovieBooking/MovieBooking.Slice';
+import MyTicketSlice from './Myticket/MyTicket.Slice';
 
 const rootReducer = combineReducers({
   login: LoginSlice,

@@ -9,8 +9,8 @@ import { Route } from 'react-router-dom';
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import e from 'express';
-import { setPhonenumber, setPassword ,setLogin } from '../../../Redux/Slice/LoginSlice';
-import { RootState } from '../../../Redux/store';
+import { RootState } from '../../Redux/store';
+import { setPhonenumber, setPassword ,setLogin } from '../../Redux/Login/Login.Slice';
 
 
 const Login = () => {

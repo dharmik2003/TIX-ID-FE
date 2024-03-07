@@ -6,8 +6,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { RootState } from '../../../Redux/store';
-import { setname, setPhonenumber, setemail, setPassword ,setsignup } from '../../../Redux/Slice/SignupSlice';
+import { RootState } from '../../Redux/store';
+import { setname, setPhonenumber, setemail, setPassword ,setsignup } from '../../Redux/Signup/Signup.Slice';
 
 const Signup = () => {
     const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { InitialStateMovieData, Movie } from '../../Types/DataTypes';
 // import { Movie } from '../MovieBlog/HomeMovieBlog';
-import { setMovieData } from '../../Redux/Slice/MovieBookingSlice';
+import { setMovieData } from '../../Redux/MovieBooking/MovieBooking.Slice';
 
 const Poster = () => {
 
@@ -61,7 +61,7 @@ const handlePrev1 = () => {
   const {moviesData, loading} =  useSelector((state: InitialStateMovieData) =>  state.movies)
   console.log("Movie Data from thunk: " , moviesData)
 
-  //secelted movie Store in Movie slice
+  // movie Store in Movie slice
   const handleClick = (movie:Movie) => {
     dispatch(setMovieData(movie)); 
     navigate(`/moviepage/?id=${encodeURIComponent(movie.id)}`);

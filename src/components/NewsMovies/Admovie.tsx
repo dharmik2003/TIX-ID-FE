@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import './Admovie.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { showMoviesData } from '../../Redux/Thunk/MovieThunk';
+import { showMoviesData } from '../../Redux/Movie/Movie.Thunk';
 
 
 const Admovie = () => {

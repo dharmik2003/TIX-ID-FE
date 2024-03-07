@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router
 import { useDispatch, useSelector } from 'react-redux';
 import {toast} from 'react-hot-toast'
 import { TicketEntry } from '../../Types/DataTypes';
-import { selectTime, setTheaterData, setdimension, setsite, settotal } from '../../Redux/Slice/MovieBookingSlice';
+import { selectTime, setTheaterData, setdimension, setsite, settotal } from '../../Redux/MovieBooking/MovieBooking.Slice';
 
 const SitePage: React.FC = () => {
 

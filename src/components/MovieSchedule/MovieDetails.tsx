@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import DateSelector from './Date/DateItems';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './MovieDetails.css'
-import { resetMovieBooking, selectTime, setDate, setTheaterData, setdimension,theaterIndex ,typeIndex } from "../../Redux/Slice/MovieBookingSlice";
+import { resetMovieBooking, selectTime, setDate, setTheaterData, setdimension,theaterIndex ,typeIndex } from "../../Redux/MovieBooking/MovieBooking.Slice";
 import { DimensionData,Movie } from "../../Types/DataTypes";
 // import { resetMovieBooking, selectTime, setDate, setTheaterData, setdimension,theaterIndex ,typeIndex} from '../Redux/Slice/MovieBookingSlice';
 // import { DimensionData, Movie } from "../Types/Dependency";

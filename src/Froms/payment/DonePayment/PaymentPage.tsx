@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom'
-// import myTicket, { addTicket } from '../../../Redux/Slice/MyTicketSlice';
-// import { resetMovieBooking } from '../../../Redux/Slice/MovieBookingSlice';
 import { useNavigate } from 'react-router-dom';
 import './PaymentPage.css'
-import Navbar from '../../../Navbar/Navbar';
-import Footer from '../../../Footer/Footer';
-import { addTicket } from '../../../../Redux/Slice/MyTicketSlice';
-import { resetMovieBooking } from '../../../../Redux/Slice/MovieBookingSlice';
+import { addTicket } from '../../../Redux/Myticket/MyTicket.Slice';
+import { resetMovieBooking } from '../../../Redux/MovieBooking/MovieBooking.Slice';
+import Navbar from '../../../components/Navbar/Navbar';
+import Footer from '../../../components/Footer/Footer';
 
 const PaymentPage = () => {
   const url =useLocation()

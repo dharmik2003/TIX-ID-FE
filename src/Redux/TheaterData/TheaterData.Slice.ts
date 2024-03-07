@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { showTheaterData } from "../Thunk/TheaterDataThunk";
+import { showTheaterData } from "./TheaterData.Thunk";
 import { InitialStateTheater } from "../../Types/DataTypes";
 
 // export interface InitialState{

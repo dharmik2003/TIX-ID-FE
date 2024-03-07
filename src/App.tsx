@@ -67,25 +67,29 @@ import MovieDetailsPage from './components/MovieBlog/MovieBlogPage'; // Import t
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/HomePage/Home';
-import Login from './components/foms/Auth/Login';
-import Signup from './components/foms/Auth/Signup';
+// import Login from './components/foms/Auth/Login';
+// import Signup from './components/foms/Auth/Signup';
 import SiteHomePage from './pages/SitePage/SiteHomePage';
-import Con_Pay_HomePage from './components/foms/payment/Confirm-Payment/Con_Pay_HomePage';
+// import Con_Pay_HomePage from './components/foms/payment/Confirm-Payment/Con_Pay_HomePage';
 import MovieBlog from './components/MovieBlog/HomeMovieBlog';
 import PageUpcomming from './components/ComingSoonViewAll/PageUpcomming';
 import HomeUpcommingPage from './components/ComingSoonViewAll/HomeUpcommingPage';
 import { useDispatch } from 'react-redux';
-import PaymentPage from './components/foms/payment/DonePayment/PaymentPage';
+// import PaymentPage from './components/foms/payment/DonePayment/PaymentPage';
 import MymovieHome from './components/MyMovie/MymovieHome';
 import TransactionDetailPage from './pages/TransactionDetailPage/TransactionDetailPage';
 import Profile from './pages/AccountPage/Profile';
 import Protected from './components/Protected-Route/Protected';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import './App.css'
-import { showMoviesData } from './Redux/Thunk/MovieThunk';
-import { showTheaterData } from './Redux/Thunk/TheaterDataThunk';
-import { showUpcomaingData } from './Redux/Thunk/UpcommaingThunk';
+import { showMoviesData } from './Redux/Movie/Movie.Thunk';
+import { showTheaterData } from './Redux/TheaterData/TheaterData.Thunk';
+import { showUpcomaingData } from './Redux/UpcomingMovies/Upcommaing.Thunk';
 import MovieHome from './components/MovieSchedule/MovieHome';
+import Login from './Froms/Auth/Login';
+import Signup from './Froms/Auth/Signup';
+import Con_Pay_HomePage from './Froms/payment/Confirm-Payment/ConfirmPayment';
+import PaymentPage from './Froms/payment/DonePayment/PaymentPage';
 
 function App() {
 

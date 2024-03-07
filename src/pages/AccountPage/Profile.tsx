@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 // import { setSignupclearn_value, setsignup } from '../Redux/Slice/SignupSlice'
 // import { setLogin, setloginClean_value } from '../Redux/Slice/LoginSlice'
 import Navbar from '../../components/Navbar/Navbar'
-import { setSignupclearn_value, setsignup } from '../../Redux/Slice/SignupSlice'
-import { setLogin, setloginClean_value } from '../../Redux/Slice/LoginSlice'
+import { setSignupclearn_value, setsignup } from '../../Redux/Signup/Signup.Slice'
+import { setLogin, setloginClean_value } from '../../Redux/Login/Login.Slice'
 
 const Profile = () => {
 

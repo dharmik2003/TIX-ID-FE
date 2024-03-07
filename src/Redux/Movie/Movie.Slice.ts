@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { showMoviesData } from "../Thunk/MovieThunk";
+import { showMoviesData } from "./Movie.Thunk";
 import { Movie } from "../../Types/DataTypes";
 
 export interface InitialStateMovieData{

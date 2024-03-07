@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { showMoviesData } from '../../Redux/Thunk/MovieThunk';
+import { showMoviesData } from '../../Redux/Movie/Movie.Thunk';
 import { Movie } from '../../Types/DataTypes';
 
 // export interface Movie {

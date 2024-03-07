@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../../Navbar/Navbar';
+// import Navbar from '../../../Navbar/Navbar';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './ConfirmPayment.css'
 import { IoArrowBack } from "react-icons/io5";
 import toast from 'react-hot-toast';
-import {  setdiscount,resetsetdiscount, setfinalprice, resetMovieBooking } from '../../../../Redux/Slice/MovieBookingSlice';
+import { setdiscount,resetsetdiscount, setfinalprice, resetMovieBooking } from '../../../Redux/MovieBooking/MovieBooking.Slice';
+import Navbar from '../../../components/Navbar/Navbar';
 
 const Con_Pay_HomePage = () => {
 
