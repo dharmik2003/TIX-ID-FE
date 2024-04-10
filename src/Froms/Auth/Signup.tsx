@@ -8,47 +8,127 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { RootState } from '../../Redux/store';
 import { setname, setPhonenumber, setemail, setPassword ,setsignup } from '../../Redux/Signup/Signup.Slice';
+import { addSignupThunk } from '../../Redux/Signup/add/add-signup.Thunk';
+import { getSignupThunk } from '../../Redux/Signup/get/get-signup.Thunk';
+import { setEMAIL, setID, setIsLOGIN, setNAME, setPASSWORD, setPHONENUMBER } from '../../Redux/useDetails/useDetails.Slice';
+import { CookiesUsers } from './auth-types';
+import Cookies from 'js-cookie';
+
 
 const Signup = () => {
     const dispatch = useDispatch();
     const [Signup, setSignup] = useState(true);
+    const [name, setname] = useState("");
+    const [phoneNumber, setphoneNumber] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const usenavigate = useNavigate();
-    const { name, phoneNumber, email, password } = useSelector((state: RootState) => state.sign);
-
+    // const { name, phoneNumber, email, password } = useSelector((state: RootState) => state.sign);
+//  const [userData, setUserData] = useState({
+//     name: "",
+//     phoneNumber: "",
+//     email: "",
+//     password: ""
+//   });
     const handlesetnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setname(e.target.value));
+        // dispatch(setname(e.target.value));
+        // setUserData({ ...userData, name: e.target.value });
+        
+        setname(e.target.value)
     };
 
     const handlesetPhonenumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPhonenumber(e.target.value));
+        // dispatch(setPhonenumber(e.target.value));
+        //  setUserData({ ...userData, phoneNumber: e.target.value });
+setphoneNumber(e.target.value)
     };
     const handlesetemailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setemail(e.target.value));
+        // dispatch(setemail(e.target.value));
+        //  setUserData({ ...userData, email: e.target.value });
+        setemail(e.target.value)
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPassword(e.target.value));
+        // dispatch(setPassword(e.target.value));
+        // setUserData({ ...userData, password: e.target.value });
+        setpassword(e.target.value)
     };
 
     const navigate=useNavigate()
-    const handleSignup1Click = () => {
-         if (email === '' || password === '') {
-            toast.error('All fields are required');
-        }
-        else{
-            if(password.length>=8 && password.length<=12){
-                dispatch(setsignup(true));
-                navigate('/')
-            }
-            else{
-                 toast.error('Password length must be between 8 and 12 characters');                
-            }
-        }  
-    };
+
+// const handleSignup1Click =async () => {
+//   if (name === '' || phoneNumber === '' || email === '' || password === '') {
+//     toast.error('All fields are required');
+//   } else {
+//     if(password.length >= 8 && password.length <= 12){
+//      dispatch(setsignup(true));
+      
+//      try {
+//         await dispatch<any>(addSignupThunk({ name, phoneNumber, email, password }));
+//         toast.success("data store on database")  
+//         navigate("/")
+//       } catch (error) {
+//         // Handle any errors here
+//         console.error('Signup failed:', error);
+//         toast.error('Signup failed. Please try again.');
+//       }
+//     } else {
+//       toast.error('Password length must be between 8 and 12 characters');
+//     }
+//   }  
+// };
+
+const handleSignup1Click = async () => {
+  if (name === '' || phoneNumber === '' || email === '' || password === '') {
+    toast.error('All fields are required');
+    return;
+  }
+
+
+    else{
+         // If user does not exist, proceed with signup
+    if (password.length >= 8 && password.length <= 12) {
+      dispatch(setsignup(true));
+     try{
+      const signupdata=await dispatch<any>(addSignupThunk({ name, phoneNumber, email, password }));
+      console.log("signupdata",signupdata)
+      if(signupdata.payload.success){
+         dispatch(setID(signupdata.payload.id));
+            dispatch(setNAME(signupdata.payload.name));
+            dispatch(setEMAIL(signupdata.payload.email));
+            dispatch(setPHONENUMBER(signupdata.payload.phoneNumber));
+            dispatch(setPASSWORD(signupdata.payload.password));
+            dispatch(setIsLOGIN(true));
+            
+        // const userData:CookiesUsers = {
+        //     token: signupdata.payload.token,
+        // };
+
+        // const userDataString = JSON.stringify(userData);
+
+        // // Set the entire user data object as a cookie
+        // Cookies.set('userData', userDataString);
+    
+        navigate("/login")
+        toast.success("Signup successfully!");
+      }
+     }
+     catch(error){
+        toast.error("Sign up Error, Again try Sign Up ")
+     }
+      
+    } else {
+      toast.error('Password length must be between 8 and 12 characters');
+    }
+
+    }
+
+
+};
 
     // back sign-1 to 2
-    const handleSignupClick = () => {
+    const handleSignupClick = async() => {
 
         if (name === '' || phoneNumber === '') {
             toast.error('All fields are required');
@@ -59,8 +139,29 @@ const Signup = () => {
             }
 
             if (phoneNumber.length === 10) {
-                dispatch(setPhonenumber(phoneNumber));
-                setSignup(false);
+                  try {
+                        const response = await dispatch<any>(getSignupThunk());
+                        const userData = response.payload;
+
+                        // Check if the user's phone number already exists in the database
+                        const userExists = userData.some((user:any) => user.phoneNumber === phoneNumber);
+                        console.log(useEffect)
+
+                        if (userExists) {
+                        toast.success("Phone number already exists! Please Login");
+                        navigate("/login")      
+                        }
+                        else{
+                            dispatch(setPhonenumber(phoneNumber));
+                            setSignup(false);
+
+                        }
+                                    
+                    } catch (error) {
+                        console.error('Error fetching user data:', error);
+                        toast.error('An error occurred. Please try again.');
+                    }
+                
             } 
             else {
                 toast.error('Phone number must be 10 digits');
@@ -89,9 +190,10 @@ const Signup = () => {
     },[])
 
     return (
-        <div className='maincontainerfullpage'>
+        <div className='sign-up-main-con'>
+            <div className='maincontainerfullpage'>
             
-                <div className={Signup ? 'visibleSignup': 'hiddenSignup'}>
+                <div className={Signup ? 'visibleSignup': 'hiddenSignup '}>
                     <div className='place'>
                         {/* Signup content */}
                     <img src='https://github.com/dharmik2003/poster_movie/blob/main/login/Signup.png?raw=true' className='photu' />
@@ -193,6 +295,7 @@ const Signup = () => {
 
                 </div>
           
+        </div>
         </div>
     );
 }

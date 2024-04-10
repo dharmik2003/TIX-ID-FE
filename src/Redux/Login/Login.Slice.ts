@@ -2,13 +2,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { LoginState } from '../../Types/DataTypes';
 
-// Define the initial state interface
-// export interface LoginState {
-//   phoneNumber: string;
-//   password: string;
-//   loginState: boolean;
-// }
-
 // Define the initial state
 const initialState: LoginState = {
   phoneNumber: '',

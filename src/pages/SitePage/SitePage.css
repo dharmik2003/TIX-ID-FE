@@ -83,8 +83,8 @@
 }
 
 .site-page {
-  margin: 20px;
-  margin-bottom: 100px;
+  margin: 15px;
+  margin-bottom: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,10 +107,16 @@
 }
 
 .seat-map {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  /* display: grid; */
+  /* grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(8, 1fr); */
+  /* gap: 5px; */
+}
+
+.booked {
+  background-color: #ff7f7f;
+  color: white;
+  pointer-events: none;
 }
 
 .seat-row {

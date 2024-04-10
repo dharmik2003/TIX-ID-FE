@@ -5,18 +5,22 @@ import { createSlice } from '@reduxjs/toolkit';
 //   selectedTheater: TheaterData | null;
 //   selectedDateTime: Date | null;
 // }
-const initialState = {
+export const initialState = {
   selectedMovie: {},
   selectedTheater: {},
   selectedDate: "",
   selectedTime: '',
-  theater_Index:'',
-  type_Index:'',
+  theater_Index:0,
+  screen_Index:0,
+  type_Index:0,
   selecteddimension:{},
   selectedtotal:"",
   selectsite:[],
   selectdiscount: "",
-  selectfinalprice:""
+  selectedVoucherID:0,
+  selectfinalprice:"",
+  showtimeID:0,
+  selectedmyshowID:0,
 };
 
 const MovieBookingSlice = createSlice({
@@ -39,11 +43,11 @@ const MovieBookingSlice = createSlice({
     selectTime(state, action){
       state.selectedTime = action.payload
     },
-    theaterIndex(state, action){
+    settheaterIndex(state, action){
       state.theater_Index = action.payload
     },
-    typeIndex(state, action){
-      state.type_Index = action.payload
+    setscreenIndex(state, action){
+      state.screen_Index = action.payload
     },
     setdimension(state,action){
       state.selecteddimension = action.payload;
@@ -51,6 +55,12 @@ const MovieBookingSlice = createSlice({
     setDate(state,action){
       state.selectedDate = action.payload;
     },
+    // setDateID(state,action){
+    //   state.selectedDateID = action.payload;
+    // },
+    // setTimeID(state,action){
+    //   state.selectedTimeID = action.payload;
+    // },
     settotal(state,action){
       state.selectedtotal=action.payload
     },
@@ -66,8 +76,17 @@ const MovieBookingSlice = createSlice({
     setfinalprice(state,action){
       state.selectfinalprice=action.payload
     },
+    setshowtimeID(state,action){
+      state.showtimeID=action.payload
+    },
+    setVoucherID(state,action){
+      state.selectedVoucherID=action.payload
+    },
+    setmyshowID(state,action){
+      state.selectedmyshowID=action.payload
+    },
 
   },
 });
-export const { setMovieData, setTheaterData, resetMovieBooking, selectTime ,theaterIndex,typeIndex,setdimension,setDate,settotal,setsite,setdiscount,resetsetdiscount,setfinalprice} = MovieBookingSlice.actions;
+export const { setVoucherID,setMovieData,setmyshowID, setTheaterData, resetMovieBooking, selectTime ,settheaterIndex,setscreenIndex,setdimension,setDate,settotal,setsite,setdiscount,resetsetdiscount,setfinalprice,setshowtimeID} = MovieBookingSlice.actions;
 export default MovieBookingSlice.reducer;

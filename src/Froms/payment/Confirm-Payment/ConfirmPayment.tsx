@@ -5,8 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import './ConfirmPayment.css'
 import { IoArrowBack } from "react-icons/io5";
 import toast from 'react-hot-toast';
-import { setdiscount,resetsetdiscount, setfinalprice, resetMovieBooking } from '../../../Redux/MovieBooking/MovieBooking.Slice';
+import { setdiscount, resetsetdiscount, setfinalprice, resetMovieBooking, setVoucherID, setmyshowID } from '../../../Redux/MovieBooking/MovieBooking.Slice';
 import Navbar from '../../../components/Navbar/Navbar';
+import Razorpay from 'razorpay';
+import getCookies from '../../../pages/getCookies';
+import { addmyshowThunk } from '../../../Redux/myshow/add-myshow.Thunk';
+
 
 const Con_Pay_HomePage = () => {
 
@@ -15,85 +19,77 @@ const Con_Pay_HomePage = () => {
   const url=location.pathname;
   console.log(location.pathname)
 
+  const navigate=useNavigate()
+
   //date fetch from slice
-  const {selectedMovie, selectedDate, selecteddimension, selectedTime, selectsite,selectedtotal,selectdiscount ,selectfinalprice} = useSelector((state: any) => state.movieBooking);
+  const { selectedMovie, selectedDate, selecteddimension, selectedTime, selectedVoucherID,selectsite, selectedtotal, selectdiscount, selectfinalprice, theater_Index, screen_Index, showtimeID } = useSelector((state: any) => state.movieBooking);
   console.log("seletedmovie",selectedMovie)
   console.log("price",selectedtotal)
   const length:number=selectsite.length
   console.log("length:number",length)
   console.log("selectdiscount:", selectdiscount);
 
-
+  //API calling
+  const {getseatlabelData,getseatlabelloading,getseatlableerror}=useSelector((state:any)=>state.getseatlabel)
+  console.log("getseatlabelData from seat page",getseatlabelData)
+  const seatlabels=getseatlabelData
+  //theater
+  const {gettheaterData,gettheaterloading}=useSelector((state:any)=>state.gettheater)
+  console.log("gettheaterData,,,,,,,,",gettheaterData)
+  const theaters=gettheaterData
+  //screen
+  const {getscreenData,getscreenloading,getscreenerror}=useSelector((state:any)=>state.getscreen)
+  const screens=getscreenData;
+  //voucher
+  const { getvoucherData, getvoucherloading, getvouchererror } = useSelector((state: any) => state.getvoucher)
+  console.log("getvoucherData", getvoucherData)
 
   // promocode & Discount
   const dispatch = useDispatch();
   const [promoCode, setPromoCode] = useState<string>('');
    const [discount, setDiscount] = useState<number | null>(null);
   const [showFinalPrice, setShowFinalPrice] = useState(false);
-  // const applyPromo = () => {
-
-  //   // if(selectedtotal >100 && selectedtotal <200){
-  //     const upperCasePromoCode = promoCode.toUpperCase(); 
-
-  //     let appliedDiscount: number | null = null;
-  //     switch (upperCasePromoCode) {
-  //       case 'MOVIE100': if(selectedtotal >100){appliedDiscount = 100;}else{toast.error("Total Price Must be above 100 rs")}break;
-  //       case 'MOVIE200': if(selectedtotal >200){appliedDiscount = 200;}else{toast.error("Total Price Must be above 200 rs") }break;
-          
-  //       default:
-  //         alert("Invalid promo code!")
-  //         console.log('Invalid promo code!');
-  //         break;
-  //     }
-  //     dispatch(setdiscount(appliedDiscount));
-  //     setDiscount(appliedDiscount); 
-  //   // }
-  //   // else{
-  //   //   toast.error("Total Price Must be above 100 rs")
-  //   // }    
-  // };
 
   //Apply promocode :---
   const applyPromo = () => {
-
-    const upperCasePromoCode: string = promoCode.toUpperCase(); 
-    console.log("upperCasePromoCode",upperCasePromoCode) // MOVIE100
-
-    const promoCodeMap: { [key: string] : number} = {
-        'MOVIE100': 100,
-        'MOVIE200': 200,
-    };
+    const PromoCode: string = promoCode;
+    console.log("PromoCode", PromoCode); // MOVIE100
 
     // Initialize the applied discount variable
     let appliedDiscount: number | null = null;
+    let appliedDiscountid: number | null = null;
 
-    // Check if the promo code exists & selected total acoding apply coupon
-    if (upperCasePromoCode in promoCodeMap && selectedtotal > promoCodeMap[upperCasePromoCode]) {
+    // Check if the promo code exists & selected total according to apply coupon
+    if (getvoucherData) {
+      const foundVoucher = getvoucherData.find((voucher: any) => voucher.code === PromoCode);
+      if (foundVoucher && selectedtotal > foundVoucher.price) {
         // Set the applied discount
-        console.log("promoCodeMap[upperCasePromoCode]",promoCodeMap[upperCasePromoCode]) //100
-        appliedDiscount = promoCodeMap[upperCasePromoCode];
-
-    } else {
+        console.log("foundVoucher.price", foundVoucher.price); // 100
+        appliedDiscount = foundVoucher.price;
+        appliedDiscountid = foundVoucher.id;
+      } else {
         // Handle invalid promo code or total price not meeting the requirement
-        if (!(upperCasePromoCode in promoCodeMap)) {
-            // Show an error for an invalid promo code
-            toast.error("Invalid promo code!");
-            console.log('Invalid promo code!');
+        if (!foundVoucher) {
+          // Show an error for an invalid promo code
+          toast.error("Invalid promo code!");
+          console.log('Invalid promo code!');
         } else {
-            // Show an error for total price not meeting the requirement
-            toast.error(`Total Price Must be above ${promoCodeMap[upperCasePromoCode]} rs`);
+          // Show an error for total price not meeting the requirement
+          toast.error(`Total Price Must be above ${foundVoucher.price} rs`);
         }
+      }
+    } else {
+      // Handle case where API response is not available
+      toast.error("Error: Unable to fetch promo code data from the server");
+      console.log("Error: Unable to fetch promo code data from the server");
     }
 
     // Dispatch the applied discount
     dispatch(setdiscount(appliedDiscount));
+    dispatch(setVoucherID(appliedDiscountid));
     // Set the discount state
     setDiscount(appliedDiscount);
-
-};
-
-
-  //Tax value defined
+  };
 
       let firstPrice:number = selectedtotal + (3 * length) - (selectdiscount !== null ? selectdiscount : 0);
       dispatch(setfinalprice(firstPrice))
@@ -106,6 +102,182 @@ const Con_Pay_HomePage = () => {
    const gotobackpage=()=>{
      navigator(-1)
    }
+   
+
+//seatlabel set base on id
+const [selectedlabel, setselectedlabel] = useState<string[]>([]);
+
+useEffect(() => {
+  if (selectsite && selectsite.length > 0) {
+    console.log("selectsite ---------------------------")
+    const tempLabels: string[] = [];
+    selectsite.forEach((element: any) => {
+      const showlabeldata = seatlabels.filter((seatlabel: any) => seatlabel.id == element);
+      if (showlabeldata.length > 0) {
+        console.log("showlabel", showlabeldata)
+        showlabeldata.forEach((label: any) => {
+          tempLabels.push(label.seatlabel);
+        });
+      }
+    });
+    
+    console.log("tempLabels", tempLabels)
+    setselectedlabel(tempLabels);
+  }
+}, [selectsite]); 
+
+//theater name set base on id
+const [theatername, settheatername] = useState<string>("");
+useEffect(() => {
+  const theatername = theaters.filter((theater: any) => theater.id === theater_Index);
+  console.log("theatername", theatername);
+  if (theatername.length > 0) {
+    settheatername(theatername[0].name); 
+  }
+}, [theater_Index]); 
+
+
+//name set in dimension
+const [Dimensionname, setDimensionname] = useState<string>("");
+  let dimensionScreens
+useEffect(() => {
+ dimensionScreens = screens.find((screen: any) => screen.id === screen_Index);
+  console.log("dimensionScreens", dimensionScreens.dimension);
+  
+    console.log("forloop")
+    setDimensionname(dimensionScreens.dimension);
+}, [screen_Index]); // Add screens to the dependency array
+
+
+  console.log("setDimensionname", Dimensionname)
+
+  const [ razorpayID, setrazorpayID] = useState<string>("")
+
+  // payment 
+
+
+
+  interface Razorpay {
+    once(event: string, callback: (response: any) => void): void;
+    open(): void;
+  }
+
+  const Razorpay: Razorpay = {
+  once: (event: string, callback: (response: any) => void) => {}, // Placeholder implementation
+  open: () => {}, // Placeholder implementation
+};
+
+  interface RazorpayConfig {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    image: string;
+    handler: (response: any) => void;
+    prefill: {
+      name: string;
+      email: string;
+      contact: string;
+    };
+    notes: {
+      address: string;
+    };
+    theme: {
+      color: string;
+    };
+  }
+
+  interface RazorpayInstance {
+    open(): void;
+  }
+
+  const razorpayOptions: RazorpayConfig = {
+    key: "",
+    amount: selectfinalprice * 100,
+    currency: 'INR',
+    name: 'dharmik',
+    description: 'Ticket',
+    image: '/your-logo.png',
+    handler: function (response: any) {
+      alert(response.razorpay_payment_id);
+      setrazorpayID(response.razorpay_payment_id)
+    },
+    prefill: {
+      name: 'John Doe',
+      email: 'john@example.com',
+      contact: '9999999999'
+    },
+    notes: {
+      address: 'Razorpay Corporate Office'
+    },
+    theme: {
+      color: '#F37254'
+    }
+  };
+
+  const razorpayInstance: RazorpayInstance = {
+    open: () => {
+      // Implement the logic to open Razorpay payment
+    }
+  };
+
+  const handlePayment = () => {
+    razorpayInstance.open();
+  };
+
+  
+  // const razorpayInstance = razorpay.create(razorpayOptions);
+
+  // const handlePayment = () => {
+  //   razorpayInstance.open();
+  // };
+
+
+
+
+  //database inside movie store (add myshow in table)
+
+  const storemovieinmyshow=async()=>{
+
+    try{
+
+      const userDataValues = getCookies('userData');
+      console.log("userDataValues", userDataValues)
+      let tokenWithoutQuotes
+      if (userDataValues !== null) {
+        tokenWithoutQuotes = userDataValues.replace(/"/g, '');
+        console.log("token", tokenWithoutQuotes)
+      } else {
+        console.error('userDataValue is null');
+      }
+
+
+      const data = await dispatch<any>(addmyshowThunk({
+        moiveId: selectedMovie.id,
+        showtimeId: showtimeID,
+        screenId:screen_Index,
+        voucher: selectedVoucherID,
+        seats: selectsite,
+        token: tokenWithoutQuotes || ''
+      }))
+
+      console.log("dataa", data)
+      
+      if (data.payload.id){
+        dispatch(setmyshowID(data.payload.id))
+        navigate(`${url}/PaymentPage`)
+      }
+      else if (data.payload.response.data.code) {
+        toast.error(data.payload.response.data.message)
+      }
+      
+
+    }catch(error){
+
+    }
+
+  }
 
   return (
     <div>
@@ -119,7 +291,7 @@ const Con_Pay_HomePage = () => {
                     <h3 className='confirmtitle'>Schedule Details</h3>
 
                     <p className='alltitle'>Movie Title</p>
-                    <h4 className='allans'>{selectedMovie.name}</h4>
+                    <h4 className='allans'>{selectedMovie.title}</h4>
                     <hr className='hrcss'/>
                     <p className='alltitle'>Date</p>
                     <h4 className='allans'>{selectedDate}</h4>
@@ -127,7 +299,7 @@ const Con_Pay_HomePage = () => {
                     <div className='datetimepart'>
                       <div>
                         <p className='alltitle mar'>Class</p>
-                        <h4 className='allans mar'>{selecteddimension.dimensionCategory}</h4>
+                <h4 className='allans mar'>{theatername}  ({Dimensionname}) </h4>
                       </div>
                      <div className='classtime'>
                        <p className='alltitle mar'>Time</p>
@@ -136,7 +308,7 @@ const Con_Pay_HomePage = () => {
                     </div>
                     <hr className='hrcss'/>
                     <p className='alltitle'>Tickets({selectsite.length})</p>
-                    <h4 className='allans'>{selectsite.join(', ')}</h4>
+                    <h4 className='allans'>{selectedlabel.join(', ')}</h4>
                     <hr className='hrcss'/>
 
                 </div>
@@ -145,7 +317,7 @@ const Con_Pay_HomePage = () => {
                   <h4 className='margremove'>Transaction Details</h4>
                   <div className='ticketprice '>
                     <p className='mar alltitle'>REGULAR SEAT</p>
-                    <h3 className='mar'>₹{selecteddimension.price} <span>X</span> {length}</h3>
+              <h3 className='mar'>₹{selectedtotal / length} <span>X</span> {length}</h3>
                   </div>
                   <div className='ticketprice' >
                     <p className='alltitle mar'>SERVICE FEES</p>
@@ -195,9 +367,13 @@ const Con_Pay_HomePage = () => {
                             <h3>₹ {selectfinalprice}</h3>
                         </div>
                              <div className='but-main-con'>
-                                <div className='butnowbutton'>
-                                  <NavLink to={`${url}/PaymentPage`} className="buynow" >BUY TICKETS</NavLink>
+                                <div className='butnowbutton' onClick={storemovieinmyshow}>
+                <div className="buynow" onClick={storemovieinmyshow} >BUY TICKETS</div>
+                                  {/* <NavLink to={`${url}/PaymentPage`} className="buynow" >BUY TICKETS</NavLink> */}
                               </div>
+              {/* <div className='butnowbutton'> */}
+                {/* <button className="buynow" onClick={handlePayment}>Pay with Razorpay</button> */}
+              {/* </div> */}
                              </div>
                       </div>
             </div>

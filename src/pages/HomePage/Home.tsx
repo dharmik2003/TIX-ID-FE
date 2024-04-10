@@ -3,11 +3,12 @@ import Navbar from '../../components/Navbar/Navbar'
 import Poster from '../../components/MoviesPoster/Poster'
 import Advertice from '../../components/Advertisment/Advertice'
 import Admovie from '../../components/NewsMovies/Admovie'
-import SuggestedMovie from '../../components/ComingSoonMovies/SuggestedMovie'
 // import { RootState } from '../Redux/store/store';
 import Footer from '../../components/Footer/Footer'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store'
+import SuggestedMovie from '../../components/ComingSoonMovies/SuggestedMovie'
+import ScrollButton from '../../components/scrollbar/ScrollButton'
 
 
 
@@ -29,6 +30,7 @@ const Home = () => {
         <Admovie/>
         <SuggestedMovie/>
         <Footer/>
+        <ScrollButton/>
     </div>
   )
 }

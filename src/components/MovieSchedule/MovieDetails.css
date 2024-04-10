@@ -1,26 +1,80 @@
 /*new css file-------------------------------- */
-
+.mainprocon {
+  position: relative;
+}
 .main-con {
   display: flex;
-  /* width: 100vw; */
+  width: 100vw;
   gap: 120px;
-  justify-content: center;
+  /* justify-content: start; */
   margin-top: 15px;
+  margin-left: 30px;
   padding: 10px;
   /* background-color: #f2c46f; */
+  position: relative;
 }
 
+.spinnerclassmoviedetailspage{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .main-con-slot.loading{
+  content: ''; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%); 
+  animation: loading-animation 2s linear infinite; 
+} */
+
+/* @keyframes loading-animation {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+} */
+
+
 .left-con {
-  width: 55%;
+  width: 50%;
   /* background-color: #000e62; */
   margin: 2px 0px 2px 40px;
 }
+.housefull {
+  background-color: red;
+  color: white;
+  pointer-events: none;
+}
 .right-con {
-  gap: 15px;
-  width: 40%;
   display: flex;
+  /* justify-content: center; */
+  align-items: center;
+
+  /* width: 350px;
+  height: 900px; */
+
+  /* gap: 15px; */
+  /* width: 40%; */
+  /* display: flex;*/
   flex-direction: column;
 }
+.stcikyclass {
+  width: 350px;
+  height: 900px;
+  /* background-color: #c6943f; */
+  position: sticky;
+  top: 0;
+  right: 0;
+}
+
 .se-scheduletitle {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -78,8 +132,8 @@
 }
 
 .se-movieimg {
-  height: 350px;
-  width: 350px;
+  height: 400px;
+  width: 320px;
   border-radius: 15px;
 }
 
@@ -181,6 +235,8 @@
   margin-left: 0px;
   /* color: rgba(196, 196, 196, 1); */
 }
+/* //scrollbar */
+
 .locationcity {
   display: flex;
   align-items: center;
@@ -263,14 +319,18 @@
 .main-con-slot {
   margin: 50px 0px;
 }
+
+
+
+
 .semimain-con {
   margin: 60px 0px;
   /* border: 1px solid rgba(157, 168, 190, 1); */
 }
 .se-theatername {
-  margin-top: 50px;
+  margin-top: 20px;
   justify-content: space-between;
-  width: 60%;
+  width: 75%;
   /* background-color: yellow; */
   display: flex;
   align-items: center;
@@ -298,6 +358,7 @@
 .se-theater {
   display: flex;
   gap: 10px;
+  font-size: 15px;
 }
 .filmeicon-div {
   display: flex;
@@ -348,7 +409,9 @@
   color: white;
   border-radius: 5px;
   padding: 2px;
+  
 }
+
 .CINEPOLIS {
   background-color: #000e62;
   color: white;
@@ -362,14 +425,28 @@
   padding: 2px;
 }
 
+.textsizeset{
+  font-size: 12px;
+  margin: 0px;
+  height: 18px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 /* CSS for the time slot component */
 
 .timeslot-border {
-  border: 1px solid rgba(157, 168, 190, 1);
-  padding: 5px;
-  margin: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    border: 1px solid rgba(157, 168, 190, 1);
+    padding: 2px;
+    /* margin: 5px; */
+    width: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .timeslot-border:hover {
@@ -378,13 +455,14 @@
 
 .timenumber {
   margin: 0;
+  font-size: 15px;
 }
 
-.timeslot-border.selected {
+.timeslot-border.selected1 {
   background-color: #000e62;
   color: white;
 }
-.selected {
+.selected1 {
   background-color: #000e62;
   color: white;
 }

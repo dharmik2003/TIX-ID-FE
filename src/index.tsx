@@ -28,10 +28,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
-import  {persistor, store} from './Redux/store';
+import  { store} from './Redux/store';
 
 // import { PersistGate } from 'redux-persist/integration/react';
 
@@ -46,12 +45,12 @@ root.render(
     // </Provider>
 
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
       <BrowserRouter>
         <App/>
         <Toaster/>
       </BrowserRouter>
-    </PersistGate>
+    {/* </PersistGate> */}
     </Provider>
     
 

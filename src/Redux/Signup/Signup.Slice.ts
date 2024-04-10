@@ -28,13 +28,13 @@ const SignupSlice = createSlice({
     setsignup: (state, action: PayloadAction<boolean>) => {
       state.SignupState = action.payload;
     },
-    setSignupclearn_value:(state)=>{
-      state.name="",
-      state.phoneNumber= '',
-      state.email= '',
-      state.password= ''
-    }
-  }
+    setSignupclearn_value: (state) => {
+      state.name = "";
+      state.phoneNumber = "";
+      state.email = "";
+      state.password = "";
+    },
+  },
 });
 
 export const { setname, setPhonenumber, setemail, setPassword, setsignup,setSignupclearn_value } = SignupSlice.actions;

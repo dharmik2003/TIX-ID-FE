@@ -8,6 +8,8 @@ import { setsignup } from '../../Redux/Signup/Signup.Slice';
 import { setLogin } from '../../Redux/Login/Login.Slice';
 import { RootState } from '../../Redux/store';
 import { resetMovieBooking } from '../../Redux/MovieBooking/MovieBooking.Slice';
+import { resetLoginState, setIsLOGIN } from '../../Redux/useDetails/useDetails.Slice';
+import Cookies from 'js-cookie';
 
 
 const Navbar= () => {
@@ -19,33 +21,19 @@ const handleLoginClick = () => {
 
 const dispatch = useDispatch();
 
-/* Signup state value change */
-const handlesignupStateLogoutClick=()=>{
-    dispatch(setsignup(false));
-    usenavigate('/login');
-    
-}
 
-/* login state value change */
-const handleloginStateLogoutClick=()=>{
-    dispatch(setLogin(false));
-    usenavigate('/login');
+//cookies not there then false set
+useEffect(() => {
+    if (!Cookies.get('userData')) {
+        dispatch(setIsLOGIN(false));
+    }
+}, [Cookies]);
 
-}
-
-//   const loginState = useSelector((state: RootState) => state.login.loginState);
-//   const signupState = useSelector((state: RootState) => state.signup.SignupState);
-//   const { loginname} = useSelector((state: RootState) => state.sign);
-//   const {sigunupname} = useSelector((state: RootState) =>state.signup.Signupstate);
-
-//   if(loginname || sigunupname){
-
-     
-//   }
 
 /*fetch value*/
-const loginState = useSelector((state: RootState) => state.login.loginState);
+// const loginState = useSelector((state: RootState) => state.login.loginState);
 const signupState = useSelector((state: RootState) => state.sign.SignupState);
+const loginState = useSelector((state: RootState) => state.sign.SignupState);
 
     console.log('Login State:', loginState);
     console.log('Signup State:', signupState);
@@ -53,7 +41,11 @@ const signupState = useSelector((state: RootState) => state.sign.SignupState);
 /*fetch name */
 const loginname = useSelector((state: RootState) => state.login.name);
 const signupname = useSelector((state: RootState) => state.sign.name);
+;
 
+// Inside your component
+const {id, name, phoneNumber, password, isSignup} = useSelector((state: any) => state.userDetails);
+console.log("userDetails navbar", id, name, phoneNumber, password, isSignup);
 
 console.log('Login :', loginname);
     console.log('Signup :', signupname);
@@ -71,8 +63,10 @@ console.log('Login :', loginname);
         setShowSidebar(!showSidebar);
     };
 
+    const navigate=useNavigate()
  const handleNavLinkClick = () => {
-    dispatch(resetMovieBooking());  
+    navigate("/")
+    dispatch(resetMovieBooking());
     
   };
   const toggleHamburger = () => {
@@ -86,7 +80,7 @@ console.log('Login :', loginname);
 
         <div>
             <div className="navbar">
-                <div className="leftpartnav">
+                <div className="leftpartnav" onClick={handleNavLinkClick}>
                     <img src="https://github.com/dharmik2003/poster_movie/blob/main/Navbar/tix%20id%201.png?raw=true" />
                 </div>
 
@@ -103,29 +97,11 @@ console.log('Login :', loginname);
                     <div className="navicon nav-text">
                         <NavLink to=""><IoMdNotificationsOutline className='notifIcon' /></NavLink>
                     </div>
-                    {loginState || signupState ? (
-                        <div>
-                            {/* {loginState ? (
-                                <div className='home-nav-Login-but' onClick={handleloginStateLogoutClick}>
-                                    <h4 className='home-nav-login-text'> {loginname && loginname.charAt(0).toUpperCase()}</h4>
-                                </div>
-                            ) : (
-                                <div className='home-nav-Login-but' onClick={handlesignupStateLogoutClick}>
-                                    <h4 className='home-nav-login-text'> {signupname && signupname.charAt(0).toUpperCase()}</h4>
-                                </div>
-                            )} */}
-                            {loginState ? (
+                    {isSignup?(
                                 <div className='home-nav-Login-but' onClick={()=>{usenavigate('/profile')}}>
-                                    <h4 className='home-nav-login-text'> {loginname && loginname.charAt(0).toUpperCase()}</h4>
+                                    <h4 className='home-nav-login-text'> {name && name.toUpperCase()}</h4>
                                 </div>
                             ) : (
-                                <div className='home-nav-Login-but'  onClick={()=>{usenavigate('/profile')}}>
-                                    <h4 className='home-nav-login-text'> {signupname && signupname.charAt(0).toUpperCase()}</h4>
-                                </div>
-                            )}
-
-                        </div>
-                    ) : (
                         <div className='signuploginpage'>
                             <div className='humburderlogincss'>
                                 <div className='home-nav-Login-but' onClick={()=>{usenavigate('/signup');}}>
@@ -154,7 +130,7 @@ console.log('Login :', loginname);
                                     <IoMdClose />
                                     </div> */}
                                     <div className="nav-text">
-                                        <NavLink to="/" onClick={()=>{handleNavLinkClick() , setShowSidebar(false)}} className="colortextset">Home</NavLink>
+                                        <NavLink to="/" onClick={() => { handleNavLinkClick(); setShowSidebar(false); }} className="colortextset">Home</NavLink>
                                     </div>
                                     <div className="nav-text second">
                                         <NavLink to="/MymovieHome" className="colortextset" onClick={()=>setShowSidebar(false)}>My Ticket</NavLink>
@@ -162,29 +138,44 @@ console.log('Login :', loginname);
                                     <div className="nav-text third">
                                         <NavLink to="/movie " className="colortextset" onClick={()=>setShowSidebar(false)}>TIX ID News</NavLink>
                                     </div>
-                                    {loginState || signupState ? (
+                                    {/* {isSignup ? (
                                         <div className='login-signup-buton'>
-                                            {loginState ? (
+                                            {isSignup ? (
                                             <div className='home-nav-Login-but' onClick={()=>{usenavigate('/profile')}}>
-                                                <h4 className='home-nav-login-text'> {loginname && loginname.charAt(0).toUpperCase()}</h4>
+                                                <h4 className='home-nav-login-text'> {name && name.charAt(0).toUpperCase()}</h4>
                                             </div>
                                         ) : (
                                             <div className='home-nav-Login-but'  onClick={()=>{usenavigate('/profile')}}>
-                                                <h4 className='home-nav-login-text'> {signupname && signupname.charAt(0).toUpperCase()}</h4>
+                                                <h4 className='home-nav-login-text'> {name && name.charAt(0).toUpperCase()}</h4>
                                             </div>
                                         )}
                                                                 </div>
-                                                            ) : (
+                                                            ) :
+                                                             (
+                                                                <div className='home-nav-Login-but loginheightset' onClick={handleLoginClick}>
+                                                                    <h4 className='home-nav-login-text'>Log In</h4>
+                                                                </div>
+                                                            )} */}
+
+                                                            
+                                        <div className='login-signup-buton'>
+                                            {isSignup ? (
+                                            <div className='home-nav-Login-but' onClick={()=>{usenavigate('/profile')}}>
+                                                <h4 className='home-nav-login-text'> {name && name.charAt(0).toUpperCase()}</h4>
+                                            </div>
+                                        ) :
+                                                             (
                                                                 <div className='home-nav-Login-but loginheightset' onClick={handleLoginClick}>
                                                                     <h4 className='home-nav-login-text'>Log In</h4>
                                                                 </div>
                                                             )}
                                                         </div>
                                                         
-                                                    </div>
-                                        )}
+                                          
                       </div>
                 </div>   
+                                          )}</div>
+            </div>
             </div>
             
         </div>

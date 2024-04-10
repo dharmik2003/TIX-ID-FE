@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import { setSignupclearn_value, setsignup } from '../../Redux/Signup/Signup.Slice'
 import { setLogin, setloginClean_value } from '../../Redux/Login/Login.Slice'
+import Cookies from 'js-cookie'
+import { resetLoginState } from '../../Redux/useDetails/useDetails.Slice'
 
 const Profile = () => {
 
@@ -14,14 +16,16 @@ const Profile = () => {
      const usenavigate =useNavigate()
      const dispatch = useDispatch()
     //  const {phoneNumber,password}=useSelector((state:any)=>state.login)
-     const {name,email,phoneNumber,password}=useSelector((state:any)=>state.sign)
-     
+    //  const {name,email,phoneNumber,password}=useSelector((state:any)=>state.sign)
+    const {id, name, phoneNumber,email, password, isSignup} = useSelector((state: any) => state.userDetails);
+    console.log("userDetails profile page", id, name, phoneNumber, password, isSignup);
+
+    const{addmyshowData,addmyshowloading,addmyshowerror} = useSelector((state:any)=>state.addmyshow)
+    
+
     const handleloginonclick=()=>{
-        // dispatch()
-        dispatch(setsignup(false));
-        dispatch(setLogin(false));  
-        dispatch(setloginClean_value()); 
-        dispatch(setSignupclearn_value()); 
+        dispatch(resetLoginState())
+        Cookies.remove('userData');
         usenavigate('/');  
     }
 

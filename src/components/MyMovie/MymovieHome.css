@@ -10,6 +10,10 @@
   margin: 30px;
   width: 70%;
 }
+.emptyticket{
+  color: rgba(255, 190, 0, 1);
+  font-size: 20px;
+}
 
 .main-details {
   display: flex;

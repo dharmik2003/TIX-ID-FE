@@ -43,18 +43,56 @@
   height: 100vh;
 } */
 
+.sign-up-main-con {
+    animation: slideInRight 0.5s ease-in-out;
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
 .visibleSignup {
   opacity: 1;
   height: auto;
   visibility: visible;
   transition: opacity 0.5s ease-in-out;
 }
+
+.hiddenSignup {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
+  /* animation: slideOutRight 0.5s ease-in-out; */
+}
+
+
+
+
+
+
+
+/* .visibleSignup {
+  opacity: 1;
+  height: auto;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out;
+  animation: slideInRight1 0.5s ease-in-out;
+}
 .hiddenSignup {
   opacity: 0;
   display: none;
   transition: opacity 0.5s ease-in-out;
   pointer-events: none;
-}
+  animation: slideInRight1 0.5s ease-in-out;
+} */
 
 .slideinright {
 }
@@ -71,7 +109,6 @@
 
 /* con */
 .main-cont {
-  z-index: 10;
   position: relative;
   display: flex;
   justify-content: space-between;

@@ -1,27 +1,23 @@
 // import { PhoneNumber } from "react-phone-number-input";
 
 export interface LoginState {
-    phoneNumber: string,
-    password: string,
-    loginState:boolean,
+  phoneNumber: string;
+  password: string;
+  loginState: boolean;
 }
 export interface SignUpState {
-    name:string
-    phoneNumber: string,
-    email:string,
-    password: string,
-    SignupState: boolean,
+  name: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  SignupState: boolean;
 }
-
-
 
 /*login or not data pass in home page*/
 export interface NavbarProps {
   loginstate: boolean;
   signupstate: boolean;
 }
-
-
 
 // export interface Details{
 // great: {
@@ -44,7 +40,7 @@ export interface NavbarProps {
 //         time:string[];
 //         ticketprice: number;
 //       };
-      
+
 //     };
 //     best: {
 //       feedback: string;
@@ -66,7 +62,7 @@ export interface NavbarProps {
 //         time:string[];
 //         ticketprice: number;
 //       };
-      
+
 //     };
 //     good: {
 //       feedback: string;
@@ -88,48 +84,43 @@ export interface NavbarProps {
 //         time:string[];
 //         ticketprice: number;
 //       };
-      
+
 //     };
 
-
 // }
-
 
 //poster Movie Date
 export interface Movie {
   id: number;
   image: string;
-  imgurl: string;
-  name: string;
-  type1: string;
-  type2: string;
-  type3: string;
+  title: string;
   description: string;
   tag: string;
   like: number;
-  duration:string
-  director:string;
-  agerating:string;
+  duration: string;
+  director: string;
+  agerating: string;
   releaseDate: string;
   trailer: string;
   key: string;
+  rate: string;
 }
 
 // Theater Data API Depen...
 export interface Theater {
-    id: string;
-    name: string;
-    city: string;
-    address: string;
-    badge: string;
-    // studio: StudioData[];
-    dimension: DimensionData[];
+  id: string;
+  name: string;
+  city: string;
+  address: string;
+  badge: string;
+  // studio: StudioData[];
+  dimension: DimensionData[];
 }
 export type DimensionData = {
-    dimensionCategory: string;
-    time: string[];
-    price: string;
-}
+  dimensionCategory: string;
+  time: string[];
+  price: string;
+};
 
 export interface State {
   selectedMovie: Movie;
@@ -145,8 +136,7 @@ export interface State {
   selectfinalprice: string;
 }
 
-
-//Myticket 
+//Myticket
 export interface Movie {
   id: number;
   name: string;
@@ -177,46 +167,45 @@ export interface TicketEntry {
   theater: Theater;
   date: Date;
   time: Time;
-  dimension:Dimension;
+  dimension: Dimension;
   seats: Seat[] | null;
   totalPrice: number;
   discount: number;
   finalAmount: number;
-  randomnumber:number;
+  randomnumber: number;
 }
 export interface MyTicketState {
   tickets: TicketEntry[];
 }
 
-
 //TheaterDataSlice.ts
 
-export interface InitialStateTheater{
-    theaterData: TheaterData[],
-    theaterloading: boolean,
-    error: String,
+export interface InitialStateTheater {
+  theaterData: TheaterData[];
+  theaterloading: boolean;
+  error: String;
 }
-
 
 //TheaterData.ts
 export type TheaterData = {
-    id: string;
-    name: string;
-    city: string;
-    address: string;
-    badge: string;
-    // studio: StudioData[];
-    dimension: DimensionData[];
-  };
+  id: string;
+  name: string;
+  city: string;
+  address: string;
+  badge: string;
+  // studio: StudioData[];
+  dimension: DimensionData[];
+};
 
-  //MOvieSlice.ts 
+//MOvieSlice.ts
 
-  export interface InitialStateMovieData{
-        movies: any;
-        moviesData: Movie[],
-        loading: boolean,
-        error: String,
- }
+export interface InitialStateMovieData {
+  [x: string]: any;
+  movies: any;
+  moviesData: Movie[];
+  loading: boolean;
+  error: String;
+}
 export interface Movie {
   key: string;
   id: number;
@@ -229,7 +218,7 @@ export interface Movie {
   tag: string;
   like: number;
   releaseDate: string;
-  imgurl:string;
+  imgurl: string;
   trailer: string;
 }
 
@@ -238,20 +227,34 @@ export interface Props {
   poster_movie: Movie[];
 }
 
- //SignleMovieDetails.tsx
-
-
-
+//SignleMovieDetails.tsx
 
 /*UpcomingMovie.ts Data file */
- export interface UpMovie {
+export interface UpMovie {
   id: string;
-  name: string;
+  title: string;
   image: string;
-  description:string;
-  releaseDate: string;
+  description: string;
+  date: string;
   tag: string;
   type1: string;
   type2: string;
   type3: string;
+}
+export interface News {
+  id: string;
+  title: string;
+  image: string;
+  trailer: string;
+  description: string;
+  date: string;
+  tag: string;
+  like: number;
+}
+export interface Signup {
+  id: string;
+  name: string;
+  phonenumer: string;
+  email: string;
+  password: string;
 }

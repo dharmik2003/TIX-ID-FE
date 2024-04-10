@@ -20,7 +20,7 @@
 //         <Route path='/sitepage' element={<SiteHomePage />}/>
 //         <Route path='/confirm_payment' element={<Con_Pay_HomePage />}/>
 //         {/* <Route path='/movieblog' element={}/> */}
-       
+
 //         <Route path="*" element={<h1>Page not found</h1>}/>
 //       </Routes>
 //     </div>
@@ -82,58 +82,99 @@ import Profile from './pages/AccountPage/Profile';
 import Protected from './components/Protected-Route/Protected';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import './App.css'
-import { showMoviesData } from './Redux/Movie/Movie.Thunk';
 import { showTheaterData } from './Redux/TheaterData/TheaterData.Thunk';
-import { showUpcomaingData } from './Redux/UpcomingMovies/Upcommaing.Thunk';
 import MovieHome from './components/MovieSchedule/MovieHome';
 import Login from './Froms/Auth/Login';
 import Signup from './Froms/Auth/Signup';
 import Con_Pay_HomePage from './Froms/payment/Confirm-Payment/ConfirmPayment';
 import PaymentPage from './Froms/payment/DonePayment/PaymentPage';
+import { shownews } from './Redux/news/news.Thunk';
+import { getSignupThunk } from './Redux/Signup/get/get-signup.Thunk';
+import { getmovieThunk } from './Redux/Movie/get/Movie.Thunk';
+import { getTheaterThunk } from './Redux/theater/get/get-theater.Thunk';
+import { getScreenThunk } from './Redux/screen/get-screen.Thunk';
+import { getShowTimeThunk } from './Redux/showtime/get-showtime.Thunk';
+import { getupcomingThunk } from './Redux/upcomingmovie/upcomingmovie.Thunk';
+import { getSeatlabelThunk } from './Redux/seats/get/get-seatlabel.Thunk';
+import { getVoucherThunk } from './Redux/Voucher/get-voucher.SliceThunk';
+import { addPaymentThunk } from './Redux/payment/add-payment.Thunk';
+import { getMyTicketsThunk } from './Redux/Mytickets/get-myticket.Thunk';
+
+
 
 function App() {
 
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(showMoviesData() as any)
-    dispatch(showTheaterData() as any);
-    // dispatch(showMoviesData() as any);
-    dispatch(showUpcomaingData() as any);
 
-  });
+//   useEffect(() => {
+//      dispatch<any>(getSignupThunk())
+//     dispatch<any>(getUpcomaingmovieThunk())
+//     dispatch<any>(getmovieThunk())
+//     dispatch<any>(shownews())
+    
+//     dispatch(getmovieThunk() as any)
+//     dispatch(showTheaterData() as any);
+//     // dispatch(showUpcomaingData() as any);
+
+//   });
+//     useEffect(()=>{
+  
+//   dispatch<any>(getTheaterThunk())
+//   dispatch<any>(getScreenThunk())
+//   dispatch<any>(getShowTimeThunk())
+// })
+useEffect(() => {
+  dispatch<any>(getTheaterThunk());
+  dispatch<any>(getSignupThunk());
+  dispatch<any>(getmovieThunk());
+  dispatch<any>(shownews());
+  dispatch<any>(getSeatlabelThunk());
+  dispatch<any>(getVoucherThunk());
+});
+useEffect(() => {
+  dispatch<any>(getScreenThunk());
+})
+useEffect(() => {
+  dispatch<any>(getupcomingThunk());
+});
+useEffect(()=>{
+dispatch<any>(getShowTimeThunk());
+})
 
 
   return (
     <div className="App container">
-      
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup/>} />
-          <Route path='/moviepage' element={<Protected><MovieHome /></Protected>} />
-          <Route path='/movie/:id/sitehomepage' element={<SiteHomePage />} />
-          <Route path="/movie/:id/sitehomepage/confirm_payment" element={<Con_Pay_HomePage />} />
-          <Route path="/movie/:id/sitehomepage/confirm_payment/PaymentPage" element={<PaymentPage />} />
-          <Route path='/movie' element={<Protected><MovieBlog/></Protected>} />
-          <Route path='/upcomming' element={<Protected><HomeUpcommingPage/></Protected>} /> 
-          <Route path='/movie/:movieName' element={<Protected><MovieDetailsPage /></Protected>} />
-          <Route path='/upcomming/:movieName' element={<Protected><PageUpcomming /></Protected>} />
-          <Route path="/MymovieHome" element={<Protected><MymovieHome /></Protected>} />
-          <Route path="/MymovieHome/:ramdonnumber" element={<TransactionDetailPage/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="*" element={<PageNotFound/>} />
+
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/moviepage/:id' element={<Protected><MovieHome /></Protected>} />
+        {/* <Route path='/moviepage/:id' element={<MovieHome />} /> */}
+        <Route path='/movie/:id/sitehomepage' element={<SiteHomePage />} />
+        <Route path="/movie/:id/sitehomepage/confirm_payment" element={<Con_Pay_HomePage />} />
+        <Route path="/movie/:id/sitehomepage/confirm_payment/PaymentPage" element={<PaymentPage />} />
+        <Route path='/movie' element={<Protected><MovieBlog /></Protected>} />
+        <Route path='/upcomming' element={<Protected><HomeUpcommingPage /></Protected>} />
+        <Route path='/movie/:movieid' element={<Protected><MovieDetailsPage /></Protected>} />
+        <Route path='/upcomming/:movieName' element={<Protected><PageUpcomming /></Protected>} />
+        <Route path="/MymovieHome" element={<Protected><MymovieHome /></Protected>} />
+        <Route path="/MymovieHome/:ramdonnumber" element={<TransactionDetailPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<PageNotFound />} />
 
 
-          {/* <Protected>
+        {/* <Protected>
             <Route path='/movie' element={<MovieBlog/>} />
             <Route path='/upcomming' element={<HomeUpcommingPage/>} /> 
           </Protected> */}
-        </Routes>
+      </Routes>
 
     </div>
   );
 }
 
 export default App;
+

@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import './Admovie.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { showMoviesData } from '../../Redux/Movie/Movie.Thunk';
 
 
 const Admovie = () => {
@@ -15,9 +14,9 @@ const Admovie = () => {
   // const itemsToShow = movies.slice(0, 3);
   // const itemsToShow = movies;
 
-  const handleClick = (movieName: string) => {
+  const handleClick = (movieid: string) => {
     
-    navigate(`/movie/${movieName}`);
+    navigate(`/movie/${movieid}`);
       
   };
 
@@ -25,13 +24,14 @@ const Admovie = () => {
   // data fetch (thunk movieSlice, movieThunk)
     const dispatch = useDispatch()
 
-    const {moviesData, loading} =  useSelector((state: any) =>  state.movies)
-    console.log("Movie Data from thunk: " , moviesData)
-    useEffect(() => {
-      dispatch(showMoviesData() as any)
-    },[])
+    // const {moviesData, loading} =  useSelector((state: any) =>  state.movies)
+    const { newsData, newsloading } = useSelector((state:any) => state.shownews);
+    console.log("newsdata",newsData)
+    // useEffect(() => {
+    //   dispatch(showMoviesData() as any)
+    // },[])
 
-    const itemsToShow = moviesData;
+    const itemsToShow = newsData;
 
     
   return (
@@ -52,11 +52,11 @@ const Admovie = () => {
 <div className="admovie-container">
         {itemsToShow.map((movie:any) => (
           <div className="admovie-card" key={movie.id}
-            onClick={() => handleClick(movie.name)}
+            onClick={() => handleClick(movie.id)}
             >
             <img
-              src={movie.imgurl}
-              alt={movie.name}
+              src={movie.image}
+              alt={movie.title}
               className="admovie-image"
                // Handle click event
             />
@@ -64,8 +64,8 @@ const Admovie = () => {
               <div className="admovie-tag">
                 <div className='tag-border'>{movie.tag}</div>
               </div>
-              <h2 className="admovie-title">{movie.name}</h2>
-              <div className="admovie-releasedate">{movie.releaseDate}</div>
+              <h2 className="admovie-title">{movie.title}</h2>
+              <div className="admovie-releasedate">{movie.date}</div>
             </div>
           </div>
         ))}

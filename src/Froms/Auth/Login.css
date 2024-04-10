@@ -3,6 +3,17 @@
   height: 99vh; */
   /* z-index: -10; */
 }
+/* .login-main-con1 {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("https://github.com/dharmik2003/poster_movie/blob/main/login/Picture1.png?raw=true");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: space-between;
+} */
+
 .login-main-con1 {
   position: relative;
   width: 100vw;
@@ -12,7 +23,20 @@
   background-size: cover;
   display: flex;
   justify-content: space-between;
+  animation: slideInRight 0.5s ease-in-out; /* Apply the animation */
 }
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%); /* Start from right side of the screen */
+  }
+  100% {
+    transform: translateX(0); /* Move to original position */
+  }
+}
+
+
+
 .spaceset {
   margin-top: 50px;
 }

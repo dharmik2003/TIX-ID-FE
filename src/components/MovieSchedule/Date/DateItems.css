@@ -13,18 +13,26 @@
 }
 
 .sliderpart {
+  cursor: pointer;
   display: flex;
   gap: 10px;
   white-space: nowrap; /* Prevent line breaks */
+}
+.eachdate:hover,
+.monthdate:hover {
+  background-color: rgba(26, 44, 80, 1);
+  color: white;
 }
 
 .eachdate {
   margin: 0px 1px;
   flex: 0 0 auto;
   border: 2px solid rgba(90, 99, 122, 1);
+  color: rgba(90, 99, 122, 1);
   padding: 10px;
   border-radius: 6px;
 }
+
 .selected {
   background-color: rgba(26, 44, 80, 1);
   color: white;
@@ -35,10 +43,11 @@
 
 .monthdate {
   font-size: 16px;
+  text-align: center;
   font-weight: 500;
-  color: rgba(90, 99, 122, 1);
 }
 
 .dateday {
   text-align: center;
+  /* color: rgba(90, 99, 122, 1); */
 }

@@ -1,0 +1,95 @@
+  
+    {filteredTheaterData.map((theater: any, index: number) => {
+    // Find all matching screens for the current theater
+    const matchingScreens = screens.filter((screen: any) => screen.theater.id === theater.id);
+  
+  
+  
+  return (
+  <div key={index}>
+    <div className="se-theatername">
+      <div className="se-theater">
+        <div className="filmeicon-div">
+          <FcFilmReel className="fimeicon" />
+        </div>
+        <div>
+          <p className="theatername">{theater.name}</p>
+        </div>
+      </div>
+      <div>
+        <p className={theater.badge === 'CGV' ? 'CGV' : theater.badge === 'XXI' ? 'XXI' : theater.badge === 'CINEPOLIS' ? 'CINEPOLIS' : ''}>{theater.badge}</p>
+      </div>
+    </div>
+    <p className="theateraddress">{theater.address}, {theater.city}</p>
+    {matchingScreens.length > 0 ? (
+      <div>
+        {matchingScreens.map((screen: any, screenIndex: number) => (
+          <div key={screenIndex}>
+            <p>{screen.dimension}</p>
+            <div className="se-timeslot-div">
+              {showtimes
+                .filter((showtime: any) => {
+                  const showDateTime = new Date(showtime.time);
+                  return showDateTime.toDateString() === new Date(selectedDate).toDateString() && showtime.screen.id === screen.id;
+                })
+                .sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime())
+                .map((showtime: any, showtimeIndex: number) => (
+                  <div
+                    key={showtimeIndex}
+                    className={`timeslot-border ${theater.id === selectedTheater && screen.id === typeIndex && showtime.id === selectedTime ? 'selected' : ''}`}
+                    onClick={() => {
+                      dispatch(theaterIndex(theater.id)); // Pass theater ID
+                      dispatch(selectTime(showtime.id)); // Pass showtime ID
+                      dispatch(typeIndex(screen.id)); // Pass dimension
+                      // dispatch(settotal(showtime.price));
+                    }}
+                  >
+                    <p className="timenumber">
+                      {new Date(showtime.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p>No screens found for this theater</p>
+    )}
+  </div>
+);
+
+
+
+
+
+
+
+
+
+/////////////////////////
+
+
+moviedetils.tsx  325 line---------------
+
+
+
+{showtimes
+  .filter((showtime: any) => showtime.screen.id === screen.id)
+  .sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime())
+  .map((showtime: any, showtimeIndex: number) => (
+    <div
+      key={showtimeIndex}
+      className={`timeslot-border ${theater.id === selectedTheater && screen.id === typeIndex && showtime.id === selectedTime ? 'selected' : ''}`}
+      onClick={() => {
+        dispatch(theaterIndex(theater.id));
+        dispatch(selectTime(showtime.id));
+        dispatch(typeIndex(screen.id));
+      }}
+    >
+      {/* Render showtime time */}
+      <p className="timenumber">
+        {new Date(showtime.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </p>
+    </div>
+  ))}

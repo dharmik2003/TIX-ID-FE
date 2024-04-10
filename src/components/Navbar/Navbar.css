@@ -77,6 +77,7 @@
 }
 .leftpartnav {
   margin-left: 30px;
+  cursor: pointer;
 }
 
 .signuploginpage {
@@ -103,9 +104,12 @@
     gap: 20px;
   }
 
+  .home-nav-login-text {
+    font-size: 12px;
+  }
   .home-nav-Login-but {
     height: 30px;
-    border-radius: 50px;
+    /* border-radius: 10px; */
     /* width: 30px; */
     display: flex;
     justify-content: center;
