@@ -97,7 +97,7 @@ const PageUpcomming = () => {
   const id = urlId.movieName;
   console.log("id", id); 
 
-  const { upcomingData, upcomingloading, upcomingerror } = useSelector((state: RootState) => state.upcomingMovie);
+  const { upcomingData, upcomingloading, upcomingerror } = useSelector((state: RootState) => state.getupcomingMovie);
 
   console.log("upcoming from single movie page", upcomingData);
 

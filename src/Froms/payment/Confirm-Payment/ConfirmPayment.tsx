@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import './ConfirmPayment.css'
 import { IoArrowBack } from "react-icons/io5";
 import toast from 'react-hot-toast';
-import { setdiscount, resetsetdiscount, setfinalprice, resetMovieBooking, setVoucherID, setmyshowID } from '../../../Redux/MovieBooking/MovieBooking.Slice';
+import { setdiscount, resetsetdiscount, setfinalprice, resetMovieBooking, setVoucherID, setmyshowID, settractionID } from '../../../Redux/MovieBooking/MovieBooking.Slice';
 import Navbar from '../../../components/Navbar/Navbar';
 import Razorpay from 'razorpay';
 import getCookies from '../../../pages/getCookies';
 import { addmyshowThunk } from '../../../Redux/myshow/add-myshow.Thunk';
+import { addpaymentThunk } from '../../../Redux/razorpay-payment/add-razorpaypayment.Thunk';
 
 
 const Con_Pay_HomePage = () => {
@@ -22,7 +23,7 @@ const Con_Pay_HomePage = () => {
   const navigate=useNavigate()
 
   //date fetch from slice
-  const { selectedMovie, selectedDate, selecteddimension, selectedTime, selectedVoucherID,selectsite, selectedtotal, selectdiscount, selectfinalprice, theater_Index, screen_Index, showtimeID } = useSelector((state: any) => state.movieBooking);
+  const { selectedMovie, selectedDate, selecteddimension, selectedTime, selectedmyshowID, selectedVoucherID,selectsite, selectedtotal, selectdiscount, selectfinalprice, theater_Index, screen_Index, showtimeID } = useSelector((state: any) => state.movieBooking);
   console.log("seletedmovie",selectedMovie)
   console.log("price",selectedtotal)
   const length:number=selectsite.length
@@ -266,7 +267,21 @@ useEffect(() => {
       
       if (data.payload.id){
         dispatch(setmyshowID(data.payload.id))
-        navigate(`${url}/PaymentPage`)
+        try{
+          console.log("selectedmyshowID", data.payload.id)
+          const paymentresponce = await dispatch<any>(addpaymentThunk({ myshowId: data.payload.id, token: tokenWithoutQuotes || ''}))
+          console.log("paymentresponce", paymentresponce)
+          if (paymentresponce.payload.paymenturl){
+            // const"https://rzp.io/i/aq45fyhLjn"
+            dispatch(settractionID(paymentresponce.payload.paymentID))
+            window.location.href = paymentresponce.payload.paymenturl
+
+          }
+          // navigate(`${url}/PaymentPage`)          
+        }catch(error){
+
+        }
+        
       }
       else if (data.payload.response.data.code) {
         toast.error(data.payload.response.data.message)
@@ -368,7 +383,7 @@ useEffect(() => {
                         </div>
                              <div className='but-main-con'>
                                 <div className='butnowbutton' onClick={storemovieinmyshow}>
-                <div className="buynow" onClick={storemovieinmyshow} >BUY TICKETS</div>
+                <div className="buynow">BUY TICKETS</div>
                                   {/* <NavLink to={`${url}/PaymentPage`} className="buynow" >BUY TICKETS</NavLink> */}
                               </div>
               {/* <div className='butnowbutton'> */}

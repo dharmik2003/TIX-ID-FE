@@ -21,6 +21,7 @@ export const initialState = {
   selectfinalprice:"",
   showtimeID:0,
   selectedmyshowID:0,
+  tractionID:""
 };
 
 const MovieBookingSlice = createSlice({
@@ -85,8 +86,11 @@ const MovieBookingSlice = createSlice({
     setmyshowID(state,action){
       state.selectedmyshowID=action.payload
     },
+    settractionID(state,action){
+      state.tractionID =action.payload
+    },
 
   },
 });
-export const { setVoucherID,setMovieData,setmyshowID, setTheaterData, resetMovieBooking, selectTime ,settheaterIndex,setscreenIndex,setdimension,setDate,settotal,setsite,setdiscount,resetsetdiscount,setfinalprice,setshowtimeID} = MovieBookingSlice.actions;
+export const { setVoucherID, setMovieData, setmyshowID, settractionID,setTheaterData, resetMovieBooking, selectTime ,settheaterIndex,setscreenIndex,setdimension,setDate,settotal,setsite,setdiscount,resetsetdiscount,setfinalprice,setshowtimeID} = MovieBookingSlice.actions;
 export default MovieBookingSlice.reducer;

@@ -1,5 +1,6 @@
 .trx-main {
   margin: 10px 0px;
+  margin-bottom: 30px;
   display: flex;
   /* flex-direction: column; */
   justify-content: center;

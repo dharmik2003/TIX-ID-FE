@@ -198,7 +198,8 @@ useEffect(() => {
               </div>
               </div>
               
-            {/* <Footer/> */}
+              <hr/>
+             <Footer/> 
         </div>
     </div>
   )

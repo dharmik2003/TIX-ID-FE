@@ -79,26 +79,49 @@ const fetchData = async () => {
                               {tickets.length === 0 ? (
                                   <p className='emptyticket'>Please buy a ticket.</p>
                               ) : (
-                                  tickets.map((ticket: any, index: number) => (
-                                      <div key={index}>
-                                          <Link to={`/MymovieHome/${ticket.id}`}>
-                                              <div className='main-details'>
-                                                  <div className='my-div-img'>
-                                                      <img src={ticket.image} className='my-img' />
-                                                  </div>
-                                                  <div className='moviedetails-right'>
-                                                      <h2 className='blackcolor moviename '>{ticket.title}</h2>
-                                                      <p className='blackcolor textsize'><span>{ticket.date}</span>    |  <span className='textsize'>{ticket.time}</span></p>
-                                                      <p><SlLocationPin className='lightcolor textsize' /> <span className='lightcolor textsize'>{ticket.theater}</span>  ( <span className='blackcolor textsize'>{ticket.screen}</span> )</p>
-                                                      {/* <p  className='blackcolor'>Total Price: {ticket.totalPrice}</p> */}
-                                                  </div>
-                                                  {/* <p>Seats: {ticket.seats.join(', ')}</p> */}
-                                              </div>
-                                          </Link>
-                                          {index !== tickets.length - 1 && <hr />}
+                                //   tickets.map((ticket: any, index: number) => (
+                                //       <div key={index}>
+                                //           <Link to={`/MymovieHome/${ticket.id}`}>
+                                //               <div className='main-details'>
+                                //                   <div className='my-div-img'>
+                                //                       <img src={ticket.image} className='my-img' />
+                                //                   </div>
+                                //                   <div className='moviedetails-right'>
+                                //                       <h2 className='blackcolor moviename '>{ticket.title}</h2>
+                                //                       <p className='blackcolor textsize'><span>{ticket.date}</span>    |  <span className='textsize'>{ticket.time}</span></p>
+                                //                       <p><SlLocationPin className='lightcolor textsize' /> <span className='lightcolor textsize'>{ticket.theater}</span>  ( <span className='blackcolor textsize'>{ticket.screen}</span> )</p>
+                                //                       {/* <p  className='blackcolor'>Total Price: {ticket.totalPrice}</p> */}
+                                //                   </div>
+                                //                   {/* <p>Seats: {ticket.seats.join(', ')}</p> */}
+                                //               </div>
+                                //           </Link>
+                                //           {index !== tickets.length - 1 && <hr />}
 
-                                      </div>
-                                  )))}
+                                //       </div>
+                                //   ))
+                                      tickets.slice().reverse().map((ticket: any, index: number) => (
+                                          <div key={index}>
+                                              <Link to={`/MymovieHome/${ticket.id}`}>
+                                                  <div className='main-details'>
+                                                      <div className='my-div-img'>
+                                                          <img src={ticket.image} className='my-img' />
+                                                      </div>
+                                                      <div className='moviedetails-right'>
+                                                          <h2 className='blackcolor moviename '>{ticket.title}</h2>
+                                                          <p className='blackcolor textsize'><span>{ticket.date}</span>    |  <span className='textsize'>{ticket.time}</span></p>
+                                                          <p><SlLocationPin className='lightcolor textsize' /> <span className='lightcolor textsize'>{ticket.theater}</span>  ( <span className='blackcolor textsize'>{ticket.screen}</span> )</p>
+                                                          {/* <p  className='blackcolor'>Total Price: {ticket.totalPrice}</p> */}
+                                                      </div>
+                                                      {/* <p>Seats: {ticket.seats.join(', ')}</p> */}
+                                                  </div>
+                                              </Link>
+                                              {index !== tickets.length - 1 && <hr />}
+
+                                          </div>
+                                      ))
+
+                                  
+                                  )}
                               </div>
                               <hr />
                           </div>

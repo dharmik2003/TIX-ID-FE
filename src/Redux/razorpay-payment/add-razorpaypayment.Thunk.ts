@@ -1,24 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export interface Addpayment {
-  // userId: number
-  myshowid: number;
+export interface Makepayment {
+  myshowId: number;
   token: string ;
-  tractionID:string;
 }
 
-export const addPaymentThunk = createAsyncThunk(
-  "addPaymentThunk",
-  async (addpayment: Addpayment, { rejectWithValue }) => {
-    const { myshowid, tractionID, token } =
-      addpayment;
+export const addpaymentThunk = createAsyncThunk(
+  "addpaymentThunk",
+  async (makepayment: Makepayment, { rejectWithValue }) => {
+    const { myshowId, token } =
+      makepayment;
     try {
       const response = await axios.post(
-        "http://localhost:5001/payment/addpayment",
+        "http://localhost:5001/razorpay/payment",
         {
-          myshowId: myshowid,
-          tractionid: tractionID
+          myshowid: myshowId,
         },
         {
           headers: {

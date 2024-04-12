@@ -20,7 +20,7 @@ const PaymentPage = () => {
   const [randomnumberss, setRandomnumberss] = useState<number>(0);
   // console.log("randomnumberss",randomnumberss)
 
-  const { selectedMovie, randomnumber,selectedmyshowID,selectedTheater,selectedDate,selectedTime, selecteddimension,selectedtotal, selectsite,selectdiscount ,selectfinalprice} = useSelector((state: any) => state.movieBooking);
+  const { selectedMovie, randomnumber,tractionID,selectedmyshowID,selectedTheater,selectedDate,selectedTime, selecteddimension,selectedtotal, selectsite,selectdiscount ,selectfinalprice} = useSelector((state: any) => state.movieBooking);
 
   // const { addpaymentData, addpaymentloading, addpaymenterror } = useSelector((state: any) => state.addpayment)
 
@@ -46,6 +46,7 @@ const PaymentPage = () => {
 
       const data= await dispatch<any>(addPaymentThunk({
         myshowid: selectedmyshowID,
+        tractionID:tractionID,
         token: tokenWithoutQuotes || ''
       }))
       console.log("paymentdata",data)

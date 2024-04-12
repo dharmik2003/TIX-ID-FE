@@ -1511,7 +1511,7 @@ filteredShowtimes.forEach((showtime: any) => {
 
         </div>
        <div className='right-con'>
-         <div>
+
            {filteredMovies.map((movie: Movie) => (
              <div className="splitdatatwopart">
                <div><img src={movie.image} className='se-movieimg'></img></div>
@@ -1539,7 +1539,6 @@ filteredShowtimes.forEach((showtime: any) => {
              </div>
            ))
            }
-         </div>
 
 
 
