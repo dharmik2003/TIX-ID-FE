@@ -11,6 +11,7 @@ import Razorpay from 'razorpay';
 import getCookies from '../../../pages/getCookies';
 import { addmyshowThunk } from '../../../Redux/myshow/add-myshow.Thunk';
 import { addpaymentThunk } from '../../../Redux/razorpay-payment/add-razorpaypayment.Thunk';
+import Spinner from '../../../components/Spinner/Spinner';
 
 
 const Con_Pay_HomePage = () => {
@@ -52,8 +53,12 @@ const Con_Pay_HomePage = () => {
   const [showFinalPrice, setShowFinalPrice] = useState(false);
 
   //Apply promocode :---
-  const applyPromo = () => {
-    const PromoCode: string = promoCode;
+  const [selectedVoucher, setSelectedVoucher] = useState('');
+
+  // const applyPromo = () => {
+  useEffect(() => { 
+    const PromoCode: string = selectedVoucher;
+    // const PromoCode: string = promoCode;
     console.log("PromoCode", PromoCode); // MOVIE100
 
     // Initialize the applied discount variable
@@ -63,7 +68,7 @@ const Con_Pay_HomePage = () => {
     // Check if the promo code exists & selected total according to apply coupon
     if (getvoucherData) {
       const foundVoucher = getvoucherData.find((voucher: any) => voucher.code === PromoCode);
-      if (foundVoucher && selectedtotal > foundVoucher.price) {
+      if (foundVoucher && selectfinalprice > foundVoucher.price) {
         // Set the applied discount
         console.log("foundVoucher.price", foundVoucher.price); // 100
         appliedDiscount = foundVoucher.price;
@@ -72,7 +77,7 @@ const Con_Pay_HomePage = () => {
         // Handle invalid promo code or total price not meeting the requirement
         if (!foundVoucher) {
           // Show an error for an invalid promo code
-          toast.error("Invalid promo code!");
+          // toast.error("Invalid promo code!");
           console.log('Invalid promo code!');
         } else {
           // Show an error for total price not meeting the requirement
@@ -90,7 +95,8 @@ const Con_Pay_HomePage = () => {
     dispatch(setVoucherID(appliedDiscountid));
     // Set the discount state
     setDiscount(appliedDiscount);
-  };
+  }, [selectedVoucher])
+  // };
 
       let firstPrice:number = selectedtotal + (3 * length) - (selectdiscount !== null ? selectdiscount : 0);
       dispatch(setfinalprice(firstPrice))
@@ -238,10 +244,13 @@ useEffect(() => {
 
 
   //database inside movie store (add myshow in table)
+  const [loading, setLoading] = useState(false);
 
   const storemovieinmyshow=async()=>{
 
     try{
+
+      setLoading(true);
 
       const userDataValues = getCookies('userData');
       console.log("userDataValues", userDataValues)
@@ -271,8 +280,10 @@ useEffect(() => {
           console.log("selectedmyshowID", data.payload.id)
           const paymentresponce = await dispatch<any>(addpaymentThunk({ myshowId: data.payload.id, token: tokenWithoutQuotes || ''}))
           console.log("paymentresponce", paymentresponce)
+          
           if (paymentresponce.payload.paymenturl){
             // const"https://rzp.io/i/aq45fyhLjn"
+            setLoading(false);
             dispatch(settractionID(paymentresponce.payload.paymentID))
             window.location.href = paymentresponce.payload.paymenturl
 
@@ -280,7 +291,7 @@ useEffect(() => {
           // navigate(`${url}/PaymentPage`)          
         }catch(error){
 
-        }
+        } 
         
       }
       else if (data.payload.response.data.code) {
@@ -294,105 +305,178 @@ useEffect(() => {
 
   }
 
+
+
+
+  // Function to handle voucher selection
+  const handleVoucherSelect = (voucherCode: string) => {
+    setSelectedVoucher(voucherCode);
+  };
+
+  const removevoucher=()=>{
+    setSelectedVoucher('');
+    const dropdown = document.getElementById("voucher-dropdown") as HTMLSelectElement | null; // Assuming you have an id on your select element
+    if (dropdown) {
+      dropdown.value = ""; 
+    }
+  }
+
   return (
     <div>
       <Navbar/>  
-      <div>
-         <div><h3 className='backfunction' onClick={gotobackpage}><IoArrowBack/>Back</h3></div>
+      {
+        !loading ?(
+          <div>
+            <div><h3 className='backfunction' onClick={gotobackpage}><IoArrowBack />Back</h3></div>
             {/* <h2>PAYMENT CONFIRMATION</h2>
             <small>Confirm payment for the seats you ordered</small> */}
             <div className='confirm-main-con'>
-                <div className='confirm-left'>
-                    <h3 className='confirmtitle'>Schedule Details</h3>
+              <div className='confirm-left'>
+                <h3 className='confirmtitle'>Schedule Details</h3>
 
-                    <p className='alltitle'>Movie Title</p>
-                    <h4 className='allans'>{selectedMovie.title}</h4>
-                    <hr className='hrcss'/>
-                    <p className='alltitle'>Date</p>
-                    <h4 className='allans'>{selectedDate}</h4>
-                    <hr className='hrcss'/>
-                    <div className='datetimepart'>
-                      <div>
-                        <p className='alltitle mar'>Class</p>
-                <h4 className='allans mar'>{theatername}  ({Dimensionname}) </h4>
-                      </div>
-                     <div className='classtime'>
-                       <p className='alltitle mar'>Time</p>
-                      <h4 className='allans mar'>{selectedTime}</h4>
-                     </div>
-                    </div>
-                    <hr className='hrcss'/>
-                    <p className='alltitle'>Tickets({selectsite.length})</p>
-                    <h4 className='allans'>{selectedlabel.join(', ')}</h4>
-                    <hr className='hrcss'/>
-
+                <p className='alltitle'>Movie Title</p>
+                <h4 className='allans'>{selectedMovie.title}</h4>
+                <hr className='hrcss' />
+                <p className='alltitle'>Date</p>
+                <h4 className='allans'>{selectedDate}</h4>
+                <hr className='hrcss' />
+                <div className='datetimepart'>
+                  <div>
+                    <p className='alltitle mar'>Class</p>
+                    <h4 className='allans mar'>{theatername}  ({Dimensionname}) </h4>
+                  </div>
+                  <div className='classtime'>
+                    <p className='alltitle mar'>Time</p>
+                    <h4 className='allans mar'>{selectedTime}</h4>
+                  </div>
                 </div>
-                <div className='confirm-left rightsidepart'>
-                  <h1 className='confirmtitle'>Order Summary</h1>
-                  <h4 className='margremove'>Transaction Details</h4>
-                  <div className='ticketprice '>
-                    <p className='mar alltitle'>REGULAR SEAT</p>
-              <h3 className='mar'>₹{selectedtotal / length} <span>X</span> {length}</h3>
-                  </div>
-                  <div className='ticketprice' >
-                    <p className='alltitle mar'>SERVICE FEES</p>
-                    <h3 className='mar'>₹3 <span>X</span> {length}</h3>
-                  </div>
-                  <hr className='hrcss center'/>
-                <div className='rightsidesecond-part'>
-                        <p className='alltitle'>Promos & Vouchers</p>
-                       
-                        {selectdiscount ? (
-                            // If selectdiscount has a value, display its details in a text field
-                            <input
-                                type='text'
-                                value={selectdiscount}
-                                disabled
-                                className='inputfield'
-                            />
-                        ) : (
-                            // If selectdiscount is null or undefined, allow the user to enter a new promo code
-                            <input
-                                type='text'
-                                placeholder='Enter Promos Code'
-                                value={promoCode}
-                                className='inputfield'
-                                onChange={(e) => setPromoCode(e.target.value)}
-                            />
-                        )}
-                        {/* <button onClick={applyPromo} className='applybut'>Apply</button> */}
-                            {selectdiscount !== null && selectdiscount > 0 && selectedtotal >100 ? (
-                                <button onClick={() => {dispatch(resetsetdiscount())} }  className='applybut'>Remove Promo</button>
-                              ) : (
-                                <button onClick={applyPromo} className='applybut'>Apply</button>
-                            )}
-                            {selectdiscount !== null && selectdiscount > 0 &&  selectedtotal > 100 && (
-                                <div>
-                                    <p className='applydiscount'>Applied {selectdiscount}rs discount!</p>
-                                    <div className='ticketprice hightset'>
-                                        <p>Discount</p>
-                                        <h3>₹ {selectdiscount}</h3>
-                                    </div>
-                                </div>
-                            )}    
-                  </div>
-                        <hr className='hrcss center'/>
-                        <div className='lastpayment-div ticketprice'>
-                            <h2 className='totalpay'>Total Pay </h2>
-                            <h3>₹ {selectfinalprice}</h3>
+                <hr className='hrcss' />
+                <p className='alltitle'>Tickets({selectsite.length})</p>
+                <h4 className='allans'>{selectedlabel.join(', ')}</h4>
+                <hr className='hrcss' />
+
+              </div>
+              <div className='confirm-left rightsidepart'>
+                <h1 className='confirmtitle'>Order Summary</h1>
+                <h4 className='margremove'>Transaction Details</h4>
+                <div className='ticketprice '>
+                  <p className='mar alltitle'>REGULAR SEAT</p>
+                  <h3 className='mar'>₹{selectedtotal / length} <span>X</span> {length}</h3>
+                </div>
+                <div className='ticketprice' >
+                  <p className='alltitle mar'>SERVICE FEES</p>
+                  <h3 className='mar'>₹3 <span>X</span> {length}</h3>
+                </div>
+                <hr className='hrcss center' />
+                {/* <div className='rightsidesecond-part'>
+                  <p className='alltitle'>Promos & Vouchers</p>
+                  <div>
+                    {selectdiscount ? (
+                      <input
+                        type='text'
+                        value={selectdiscount}
+                        disabled
+                        className='inputfield'
+                      />
+                    ) : (
+                      <input
+                        type='text'
+                        placeholder='Enter Promos Code'
+                        value={promoCode}
+                        className='inputfield'
+                        onChange={(e) => setPromoCode(e.target.value)}
+                      />
+                    )}
+                    {selectdiscount !== null && selectdiscount > 0 && selectfinalprice > 100 ? (
+                      <button onClick={() => { dispatch(resetsetdiscount()) }} className='applybut'>Remove Promo</button>
+                    ) : (
+                      <button onClick={applyPromo} className='applybut'>Apply</button>
+                    )}
+                    {selectdiscount !== null && selectdiscount > 0 && selectfinalprice > 100 && (
+                      <div>
+                        <p className='applydiscount'>Applied {selectdiscount}rs discount!</p>
+                        <div className='ticketprice hightset'>
+                          <p>Discount</p>
+                          <h3>₹ {selectdiscount}</h3>
                         </div>
-                             <div className='but-main-con'>
-                                <div className='butnowbutton' onClick={storemovieinmyshow}>
-                <div className="buynow">BUY TICKETS</div>
-                                  {/* <NavLink to={`${url}/PaymentPage`} className="buynow" >BUY TICKETS</NavLink> */}
-                              </div>
-              {/* <div className='butnowbutton'> */}
-                {/* <button className="buynow" onClick={handlePayment}>Pay with Razorpay</button> */}
-              {/* </div> */}
-                             </div>
                       </div>
+                    )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                 
+                </div> */}
+
+
+
+
+
+                <div className='rightsidesecond-part'>
+                  <p className='alltitle'>Promos & Vouchers</p>
+
+                  <div className='flexsetvoucher'>
+                    <div>
+                      <select value={selectedVoucher} onChange={(e) => handleVoucherSelect(e.target.value)}>
+                        <option value="">Select Voucher</option>
+                        {/* Map over voucher data to create dropdown options */}
+                        {getvoucherData.map((voucher: any) => (
+                          <option key={voucher.code} value={voucher.code}>
+                            {/* Format voucher description with big and small font */}
+                            <div className="voucher-description">
+                              <div className="big-font">{`Save ${voucher.price}rs`}</div>
+                              {/* <br /> */}
+                              {/* <div className="small-font">{`if total amount above ${voucher.price}rs`}</div> */}
+                            </div>
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className='removevoucherbutton'>
+                      {selectedVoucher && <div className='applybut1' onClick={removevoucher}>Remove Promo</div>}
+                    </div>
+                  
+                  </div>
+                  {selectdiscount !== null && (
+                    <div>
+                      <p className='applydiscount'>Applied {selectdiscount}rs discount!</p>
+                      <div className='ticketprice hightset'>
+                        <p>Discount</p>
+                        <h3>₹ {selectdiscount}</h3>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <hr className='hrcss center' />
+                <div className='lastpayment-div ticketprice'>
+                  <h2 className='totalpay'>Total Pay </h2>
+                  <h3>₹ {selectfinalprice}</h3>
+                </div>
+                <div className='but-main-con' onClick={storemovieinmyshow} >
+                  <div className='butnowbutton'>
+                    <div className="buynow">BUY TICKETS</div>
+                    {/* <NavLink to={`${url}/PaymentPage`} className="buynow" >BUY TICKETS</NavLink> */}
+                  </div>
+                  {/* <div className='butnowbutton'> */}
+                  {/* <button className="buynow" onClick={handlePayment}>Pay with Razorpay</button> */}
+                  {/* </div> */}
+                </div>
+              </div>
             </div>
-      </div>
+          </div>
+        ) : (<div className='spinnerinpaymentpage'><Spinner /></div>)
+      }
     </div>
   );
 };

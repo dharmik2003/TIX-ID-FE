@@ -9,7 +9,7 @@ import Spinner from '../../components/Spinner/Spinner';
 
 const SitePage: React.FC = () => {
 
-  const { selecteddimension, selectedTime, selectedDate, selectedTheater, selectedtotal, selectsite, selectedSeat, screen_Index, selectedTimeID, showtimeID } =useSelector((state : any)=>state.movieBooking)
+  const { selecteddimension, selectedTime, selectedDate, selectedTheater, selectedtotal, selectsite, selectedSeat, screen_Index, selectedTimeID, showtimeID, selectedMovie } =useSelector((state : any)=>state.movieBooking)
   console.log("datas from moviesbooking slice",selecteddimension,selectedTime,selectedDate,selectedTheater,selectedtotal,selectsite, selectedSeat)
 
   //API calling (seatlabel)
@@ -25,6 +25,8 @@ const SitePage: React.FC = () => {
  const [filterSeatLabel, setFilterSeatLabel] = useState([]);
  console.log("filterSeatLabel",filterSeatLabel)
 
+  const [perseatprice, setperseatprice]=useState<any>(0)
+
   useEffect(() => {
     console.log("selectedDate", selectedDate)
     console.log("selectedTime", selectedTime)
@@ -32,6 +34,9 @@ const SitePage: React.FC = () => {
     const filterseatlabel = seatlabels.filter((seatlabel: any) => seatlabel.showTime.date == selectedDate && seatlabel.showTime.time == selectedTime && seatlabel.screen == screen_Index);
     console.log("filterseatlabel", filterseatlabel)
 
+    const perseatdata=showtimes.find((showtime:any)=>showtime.id==showtimeID) 
+    setperseatprice(perseatdata.price)
+    console.log("perseatprice", perseatprice)
     // Find all unique row and column values
     const rowSet = new Set(filterseatlabel.map((seatlabel: any) => seatlabel.row));
     const colSet = new Set(filterseatlabel.map((seatlabel: any) => seatlabel.col));
@@ -219,7 +224,7 @@ console.log("filtershowtimeprice",filtershowtimeprice)
 // Filter showtimes based on the specified screenId
 // Assuming showtimes is an array containing showtime objects
 console.log("showtimes",showtimes)
-  const showtimesForScreen = showtimes.filter((showtime: any) => showtime.screen.id === screen_Index && showtime.date == selectedDate)
+  const showtimesForScreen = showtimes.filter((showtime: any) => showtime.screen.id === screen_Index && showtime.date == selectedDate && showtime.movie.id == selectedMovie.id)
   console.log("showtimesForScreen", showtimesForScreen)
 
 
@@ -342,6 +347,7 @@ console.log("selectsite",selectsite)
   ))}
 </div> */}
 
+              <div className='perseatpriceinsitepage'>₹{perseatprice}</div>
               <div className="seat-map" style={{ display: 'grid', gridTemplateColumns: `repeat(${columns}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)`, gap: '5px' }}>
                 {filterSeatLabel.map((seatData: any, index: number) => (
                   <div

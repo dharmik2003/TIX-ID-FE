@@ -219,9 +219,9 @@ const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
                             <span className="blog-date1">{movie.date}</span>
                           </p>
                           <div className="premium-type postions">
-                            <div className="prem-1 pad">{movie.type1}</div>
-                            <div className="prem-2 pad">{movie.type2}</div>
-                            <div className="prem-3 pad">{movie.type3}</div>
+                            <div className="prem-1 pad">{process.env.REACT_APP_TYPE1}</div>
+                            <div className="prem-2 pad">{process.env.REACT_APP_TYPE2}</div>
+                            <div className="prem-3 pad">{process.env.REACT_APP_TYPE3}</div>
                           </div>
                         </div>
                       </NavLink>
@@ -232,7 +232,6 @@ const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
                             <span className="blog-tag1">{movie.tag}</span>
                             <div className="bloghead1">
                               <h2 className="blog-title1">{movie.title}</h2>
-
                             </div>
                             <p className='moviedesc1'>
                               <span className="blog-desc1">{movie.description.slice(0, 300)}...</span>
@@ -245,9 +244,9 @@ const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
                               <span className="blog-date1">{movie.date}</span>
                             </p>
                             <div className="premium-type postions">
-                              <div className="prem-1 pad">{movie.type1}</div>
-                              <div className="prem-2 pad">{movie.type2}</div>
-                              <div className="prem-3 pad">{movie.type3}</div>
+                                <div className="prem-1 pad">{process.env.REACT_APP_TYPE1}</div>
+                                <div className="prem-2 pad">{process.env.REACT_APP_TYPE2}</div>
+                                <div className="prem-3 pad">{process.env.REACT_APP_TYPE3}</div>
                             </div>
                           </div>
                         </div>
@@ -284,9 +283,9 @@ const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
                           <span className="blog-date1 underline_none">{movie.date}</span>
                         </p>
                         <div className="premium-type postions1">
-                          <div className="prem-1 pad underline_none">{movie.type1}</div>
-                          <div className="prem-2 pad underline_none">{movie.type2}</div>
-                          <div className="prem-3 pad underline_none">{movie.type3}</div>
+                          <div className="prem-1 pad underline_none">{process.env.REACT_APP_TYPE1}</div>
+                          <div className="prem-2 pad underline_none">{process.env.REACT_APP_TYPE2}</div>
+                          <div className="prem-3 pad underline_none">{process.env.REACT_APP_TYPE3}</div>
                         </div>
                       </div>
                     </NavLink>

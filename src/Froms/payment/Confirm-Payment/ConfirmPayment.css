@@ -121,13 +121,69 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .hightset {
   height: 40px;
 }
+.spinnerinpaymentpage{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .margremove {
   margin-bottom: 5px;
 }
+
+
+
+
+/*voucher new code*/
+
+.voucher-description{
+  display: flex;
+  flex-direction: column;
+}
+
+.big-font{
+  font-size: 15px;
+  color: #1a2c50;
+}
+
+.small-font{
+  font-size: 10px;
+  color: aqua;
+}
+
+
+
+.flexsetvoucher{
+  display: flex;
+  height: 30px;
+}
+
+.removevoucherbutton, .applybut1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.applybut1 {
+  cursor: pointer;
+  margin-left: 15px;
+  width: 80px;
+  height: 28px;
+  font-size: 10px;
+  border: 1px solid #1a2c50;
+  background-color: #1a2c50;
+  color: rgba(255, 190, 0, 1);
+  border-radius: 5px;
+}
+
+
+
 @media (max-width: 1100px) {
   .confirm-left {
     width: 34%;

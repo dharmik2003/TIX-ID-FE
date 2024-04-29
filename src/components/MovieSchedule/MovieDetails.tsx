@@ -1065,7 +1065,7 @@ const MovieDetails = () => {
         [screenId: number]: {
           id: number;
           name: string;
-          showtimes: { id: number; time: string }[];
+          showtimes: { id: number; time: string ;price:number}[];
         };
       };
     };
@@ -1280,7 +1280,7 @@ filteredShowtimes.forEach((showtime: any) => {
   theaterMap[theaterId].screens[screenId].showtimes.push({
     id: showtime.id,
     time: showtime.time,
-
+    price:showtime.price
   });
 });
 
@@ -1292,6 +1292,7 @@ filteredShowtimes.forEach((showtime: any) => {
 
   // Ensure "Surat" is always listed first
   const uniqueCityNames = ['Surat', ...allUniqueCityNames.filter(city => city !== 'Surat')];
+  console.log("uniqueCityNames", uniqueCityNames)
 
   // Now 'uniqueCityNames' contains all unique city names with "Surat" listed first
 
@@ -1386,6 +1387,7 @@ filteredShowtimes.forEach((showtime: any) => {
   useEffect(()=>{
     timeoutId()
   },[])
+
 
  return (
     // <div className='mainprocon'>
@@ -1490,18 +1492,29 @@ filteredShowtimes.forEach((showtime: any) => {
                      <p className="dimentiontitile">{screen.name}</p>
                      <div className="se-timeslot-div">
                        {screen.showtimes.map((showtime) => (
-                         <div className={`timeslot-border ${selectedTime === showtime.time && theater.id == theater_Index && screen.id == screen_Index ? 'selected1' : ''}`}
-                           onClick={() => {
-                          dispatch(selectTime(showtime.time));
-                             dispatch(settheaterIndex(theater.id)); // Parse to integer if necessary
-                             dispatch(setscreenIndex(screen.id));
-                             dispatch(setshowtimeID(showtime.id));
-                           }}
-                         >
-                           <p className="timenumber">{showtime.time.slice(0, -3)}</p>
+                         <div className="timeslot-container">
+                           <div className="priceshowtime-container">
+                             {/* <p className='priceshowtime'>₹{showtime.price}</p> */}
+                           </div>
+                           <div
+                             className={`timeslot-border ${theater.id == theater_Index && screen.id == screen_Index && showtime.id == showtimeID ? 'selected1' : ''}`}
+                             onClick={() => {
+                               dispatch(selectTime(showtime.time));
+                               dispatch(settheaterIndex(theater.id)); // Parse to integer if necessary
+                               dispatch(setscreenIndex(screen.id));
+                               dispatch(setshowtimeID(showtime.id));
+                             }}
+                           >
+                             
+                             <div className="timenumber popup">{showtime.time.slice(0, -3)}
+                               <span className="popuptext" >₹{showtime.price}</span>
+                             </div>
+                           </div>
+                           
                          </div>
                        ))}
                      </div>
+
                    </div>
                  );
                })}

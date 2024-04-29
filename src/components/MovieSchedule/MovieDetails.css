@@ -391,13 +391,26 @@
 
 .timeslot-border {
   border: 1px solid rgba(157, 168, 190, 1);
-
+  display: flex;
+  /* flex-direction: column; */
   border-radius: 5px;
   padding: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
 }
+.priceshowtime{
+  height: auto;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color:#000e62;
+}
 
+.perseatpriceinsitepage{
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: rgba(157, 168, 190, 1);
+}
 /* Clearfix to ensure proper wrapping */
 .se-timeslot-div::after {
   content: "";
@@ -449,7 +462,7 @@
     display: flex;
 }
 
-.timeslot-border:hover {
+.timeslot-border:hover{
   background-color: #f0f0f0;
 }
 
@@ -475,6 +488,111 @@
   /* display: flex; */
   width: 57%;
 }
+
+/*price pop view code */
+ 
+.se-timeslot-div {
+  display: flex;
+}
+
+.timeslot-container {
+  position: relative;
+}
+
+/* .priceshowtime-container {
+  position: absolute;
+  top: -8px; 
+  right:8px;
+} */
+
+
+
+
+/* .timeslot-border {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+} */
+
+/* .timenumber {
+  margin: 0;
+}
+
+.timeslot-container:hover .priceshowtime-container {
+  display: block;
+} */
+
+
+/*price pop view*/
+
+
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+ .popuptext {
+  visibility: hidden;
+  width: 55px;
+  height: 20px;
+  background-color: #1a2c50;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  padding-top: 0px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 200%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup:hover .popuptext {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1a2c50 transparent transparent transparent;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+
+
+
+
+
+
 
 @media (max-width: 1241px) {
   .main-con {
