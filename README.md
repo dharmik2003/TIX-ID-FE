@@ -87,4 +87,4 @@ Build project
 npm run build
 ```
 
-Project Link -> https://dharmik2003.github.io/v4_movie-website/
+Demo URL: https://dharmik2003.github.io/v4_movie-website/
