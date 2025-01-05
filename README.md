@@ -23,6 +23,10 @@ A responsive movie booking platform that enables users to book tickets, select t
 - **Movie Blogs**:  
   - Stay updated with blogs about upcoming movie releases.  
 
+- **Authentication**:  
+  - Secure user login and registration.  
+  - "Forgot Password" feature for account recovery via email.  
+
 - **Responsive Design**:  
   - Fully optimized for all devices, ensuring a smooth user experience.  
 
@@ -41,6 +45,10 @@ A responsive movie booking platform that enables users to book tickets, select t
 
 - **Payment Gateway**:  
   - Razorpay  
+
+- **Authentication**:  
+  - JWT (JSON Web Tokens) for secure session management.  
+  - Password recovery and reset via email.  
 
 ## Getting Started
 
