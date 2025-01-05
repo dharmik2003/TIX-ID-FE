@@ -54,11 +54,11 @@ A responsive movie booking platform that enables users to book tickets, select t
 Clone the repository:
 
 ```bash
-git clone https://github.com/dharmik2003/TIX-ID-Movie-Booking.git
+git clone https://github.com/dharmik2003/TIX-ID-FE.git
 ```
 
 ```bash
-cd TIX-ID-Movie-Booking
+cd TIX-ID-FE
 ```
 
 Install npm package
