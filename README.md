@@ -1,4 +1,4 @@
-# TIX ID Movie Booking Website
+# TIX ID Movie Booking Website 🎥🍿
 
 A responsive movie booking platform that enables users to book tickets, select theaters by city, apply vouchers, and make secure payments. The website also includes features like invoice generation, viewing booking history, and exploring blogs about upcoming movies.
 
